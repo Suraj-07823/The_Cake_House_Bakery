@@ -54,16 +54,15 @@ jobs:
     steps:
       - name: Checkout Code
         uses: actions/checkout@v3
-      
+
+
       - name: Deploy to Vercel
-        uses: vercel/action@master
+        uses: vercel/action@v28
         with:
           vercel-token: ${{ secrets.VERCEL_TOKEN }}
           vercel-org-id: ${{ secrets.VERCEL_ORG_ID }}
           vercel-project-id: ${{ secrets.VERCEL_PROJECT_ID }}
-          alias-domains: |
-            staging-cake-house.vercel.app
-      
+
       - name: Deployment Notification
         if: success()
         run: |
