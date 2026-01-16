@@ -1,6 +1,6 @@
 // WhatsApp Configuration
 // IMPORTANT: Replace with your actual WhatsApp number (with country code, no spaces or symbols)
-const WHATSAPP_NUMBER = '919876543210'; // Example: India +91 number
+const WHATSAPP_NUMBER = '919604785331'; // Example: India +91 number
 
 // Function to create WhatsApp message link
 function createWhatsAppLink(productName, price, quantity = 1) {
