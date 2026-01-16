@@ -1,0 +1,25 @@
+{
+  "name": "cake-house",
+  "version": "1.0.0",
+  "description": "Mobile-first bakery website with WhatsApp integration",
+  "main": "index.html",
+  "scripts": {
+    "start": "http-server -p 8000 -c-1",
+    "test": "echo \"No tests yet\" && exit 0",
+    "build": "echo \"Static site - no build needed\""
+  },
+  "keywords": [
+    "bakery",
+    "cake-shop",
+    "whatsapp-integration",
+    "mobile-first"
+  ],
+  "author": "",
+  "license": "MIT",
+  "devDependencies": {
+    "http-server": "^14.1.1"
+  },
+  "engines": {
+    "node": "18.x"
+  }
+}

@@ -1,81 +1,105 @@
-# The Cake House - Website
+# The Cake House
 
-A responsive bakery website with WhatsApp order integration and custom cake builder.
+A mobile-first bakery website with WhatsApp integration and custom cake builder. Designed for local cake shops to showcase products and enable direct ordering.
 
-## Setup
+## Features
 
-1. Update WhatsApp number in `js/script.js`:
-   ```javascript
-   const WHATSAPP_NUMBER = 'YOUR_NUMBER'; // Format: 91XXXXXXXXXX
-   ```
+✨ **Responsive Design** - Mobile-first, works on all devices  
+🎂 **Product Showcase** - Display cakes and cupcakes dynamically  
+🎨 **Custom Cake Builder** - Users design their own cakes with pricing  
+💬 **WhatsApp Integration** - One-click ordering with pre-filled messages  
+⚡ **Fast & Lightweight** - No backend, pure HTML/CSS/JavaScript  
+🔧 **Easy to Maintain** - Simple product data structure  
 
-2. Update products in `js/products.js` as needed
+## Getting Started
 
-3. Customize colors in `css/style.css`
+### Prerequisites
+- Git
+- Node.js (for local development)
 
-## Development
+### Installation
 
+1. Clone the repository:
 ```bash
-# Run locally
-python -m http.server 8000
-# OR
-npx http-server
+git clone https://github.com/YOUR-USERNAME/cake-shop.git
+cd cake-shop
 ```
 
-Visit: `http://localhost:8000`
-
-## Deployment
-
-**GitHub Pages:**
+2. Install dependencies:
 ```bash
-git init
+npm install
+```
+
+3. Update WhatsApp number in `js/script.js`:
+```javascript
+const WHATSAPP_NUMBER = 'YOUR_NUMBER'; // Format: 91XXXXXXXXXX
+```
+
+4. Run locally:
+```bash
+npm start
+```
+
+### Deployment
+
+Push to main branch - Vercel deploys automatically:
+```bash
 git add .
-git commit -m "Initial commit"
-git branch -M main
-git remote add origin https://github.com/YOUR-USERNAME/cake-shop.git
-git push -u origin main
+git commit -m "Update cakes"
+git push origin main
 ```
 
-**Netlify:** Drag & drop project folder at netlify.com
+## How to Contribute
 
-**Vercel:** Import GitHub repo at vercel.com
+1. **Fork** the repository
+2. **Create** a feature branch (`git checkout -b feature/new-feature`)
+3. **Commit** changes (`git commit -m 'Add new feature'`)
+4. **Push** to branch (`git push origin feature/new-feature`)
+5. **Open** a Pull Request
 
-## File Structure
+### Contribution Guidelines
+- Update `js/products.js` to add/modify cakes
+- Edit `css/style.css` for style changes
+- Test locally before pushing
+- Keep commits clear and descriptive
+- No direct pushes to main - use pull requests
 
+## Project Usage
+
+### Add Products
+Edit `js/products.js` and add to the cakes/cupcakes array:
+```javascript
+{
+    id: 1,
+    name: 'Cake Name',
+    description: 'Description',
+    price: 450,
+    emoji: '🍫'
+}
+```
+
+### Customize Theme
+Colors in `css/style.css`:
+- Primary: `#d4745f`
+- Secondary: `#fff5f0`
+- Background: `#fdfbf7`
+
+### File Structure
 ```
 ├── index.html              # Home
 ├── pages/
 │   ├── cakes.html
 │   ├── cupcakes.html
-│   └── custom.html        # Custom cake builder
+│   └── custom.html
 ├── css/style.css
-└── js/
-    ├── products.js        # Product data
-    └── script.js          # Functionality
+├── js/
+│   ├── products.js
+│   ├── script.js
+│   └── customCake.js
+├── vercel.json
+└── package.json
 ```
-
-## Features
-
-- Mobile-first responsive design
-- Dynamic product rendering
-- WhatsApp order integration
-- Custom cake builder
-- No backend/database required
-
-## Customization
-
-**Add products:** Edit `js/products.js`
-
-**Change theme:** Modify color codes in `css/style.css`
-- Primary: `#d4745f`
-- Secondary: `#fff5f0`
-
-**Update copy:** Edit HTML files directly
-
-## Browser Support
-
-Chrome, Firefox, Safari, Edge (latest versions)
 
 ## License
 
-Free to use and modify.
+MIT License

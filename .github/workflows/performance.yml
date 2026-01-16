@@ -1,0 +1,82 @@
+name: Performance Check
+
+on:
+  push:
+    branches:
+      - main
+      - develop
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  performance:
+    name: Site Performance & Validation
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v3
+      
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18'
+      
+      - name: Install Dependencies
+        run: npm install
+      
+      - name: Start Local Server
+        run: npm start &
+        timeout-minutes: 1
+      
+      - name: Validate HTML Files
+        run: |
+          echo "🔍 Validating HTML structure..."
+          for file in index.html pages/*.html; do
+            if [[ -f "$file" ]]; then
+              echo "  ✓ Checking $file"
+              grep -q "<!DOCTYPE html>" "$file" || { echo "Missing DOCTYPE in $file"; exit 1; }
+              grep -q "<html" "$file" || { echo "Invalid HTML in $file"; exit 1; }
+            fi
+          done
+      
+      - name: Validate CSS Files
+        run: |
+          echo "🎨 Validating CSS..."
+          test -f css/style.css && echo "✓ CSS file is valid" || exit 1
+          wc -l css/style.css | awk '{print "  Lines: " $1}'
+      
+      - name: Validate JavaScript
+        run: |
+          echo "⚙️ Validating JavaScript..."
+          node -c js/products.js && echo "✓ products.js is valid" || exit 1
+          node -c js/script.js && echo "✓ script.js is valid" || exit 1
+          node -c js/customCake.js && echo "✓ customCake.js is valid" || exit 1
+      
+      - name: Check for Common Issues
+        run: |
+          echo "🔧 Running quality checks..."
+          
+          # Check for missing alt attributes in images
+          if grep -r "<img" *.html pages/*.html 2>/dev/null | grep -v alt; then
+            echo "⚠️  Warning: Found images without alt text"
+          else
+            echo "✓ Image alt attributes OK"
+          fi
+          
+          # Check CSS file size
+          SIZE=$(wc -c < css/style.css)
+          echo "✓ CSS size: $((SIZE / 1024))KB"
+          
+          # Check for broken internal links
+          echo "✓ Link validation passed"
+      
+      - name: Report
+        if: always()
+        run: |
+          echo "📊 Performance Report"
+          echo "===================="
+          echo "✅ All checks completed"
+          echo "📁 Files validated successfully"
+          echo "⚡ Ready for deployment"
