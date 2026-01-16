@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cupcakes - The Cake House</title>
+    <title>Custom Cake Builder - The Cake House</title>
     <link rel="stylesheet" href="../css/style.css">
 </head>
 <body>
@@ -15,8 +15,8 @@
                 <ul class="nav-links">
                     <li><a href="../index.html">Home</a></li>
                     <li><a href="cakes.html">Cakes</a></li>
-                    <li><a href="cupcakes.html" class="active">Cupcakes</a></li>
-                    <li><a href="custom.html">Custom Cake</a></li>
+                    <li><a href="cupcakes.html">Cupcakes</a></li>
+                    <li><a href="custom.html" class="active">Custom Cake</a></li>
                 </ul>
             </div>
         </div>
@@ -25,17 +25,15 @@
     <!-- Page Header -->
     <section class="page-header">
         <div class="container">
-            <h1>Our Sweet Cupcakes</h1>
-            <p>Cute, delicious, and perfect for any occasion</p>
+            <h1>Design Your Own Cake 🎨</h1>
+            <p>Build your perfect cake by choosing your favorite flavors and toppings</p>
         </div>
     </section>
 
-    <!-- Products -->
-    <section class="products">
+    <!-- Custom Cake Builder -->
+    <section class="custom-cake-section">
         <div class="container">
-            <div id="cupcakes-grid" class="product-grid">
-                <!-- Products will be rendered here by JavaScript -->
-            </div>
+            <div id="custom-cake-builder"></div>
         </div>
     </section>
 
@@ -49,9 +47,10 @@
 
     <script src="../js/products.js"></script>
     <script src="../js/script.js"></script>
+    <script src="../js/customCake.js"></script>
     <script>
         document.addEventListener('DOMContentLoaded', function() {
-            renderProducts('cupcakes', 'cupcakes-grid');
+            renderCustomCakeBuilder();
         });
     </script>
 </body>
