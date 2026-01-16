@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cakes - The Cake House</title>
+    <link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="container">
+            <div class="nav-content">
+                <h1 class="logo">🍰 The Cake House</h1>
+                <ul class="nav-links">
+                    <li><a href="../index.html">Home</a></li>
+                    <li><a href="cakes.html" class="active">Cakes</a></li>
+                    <li><a href="cupcakes.html">Cupcakes</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Page Header -->
+    <section class="page-header">
+        <div class="container">
+            <h1>Our Delicious Cakes</h1>
+            <p>Perfect for birthdays, anniversaries & celebrations</p>
+        </div>
+    </section>
+
+    <!-- Products -->
+    <section class="products">
+        <div class="container">
+            <div id="cakes-grid" class="product-grid">
+                <!-- Products will be rendered here by JavaScript -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2026 The Cake House. All cakes are baked fresh to order.</p>
+            <p class="contact-info">📱 Order via WhatsApp • 💳 Cash on Delivery & UPI</p>
+        </div>
+    </footer>
+
+    <script src="../js/products.js"></script>
+    <script src="../js/script.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            renderProducts('cakes', 'cakes-grid');
+        });
+    </script>
+</body>
+</html>
