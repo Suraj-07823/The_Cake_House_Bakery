@@ -6,6 +6,7 @@ const products = {
             name: 'Chocolate Delight Cake',
             description: 'Rich chocolate cake with creamy frosting',
             price: 450,
+            image: 'images/chocolate-delight-cake.jpg',
             emoji: '🍫'
         },
         {
@@ -13,6 +14,7 @@ const products = {
             name: 'Strawberry Dream',
             description: 'Fresh strawberry cake with whipped cream',
             price: 500,
+            image: 'images/strawberry-dream.jpg',
             emoji: '🍓'
         },
         {
@@ -20,6 +22,7 @@ const products = {
             name: 'Vanilla Classic',
             description: 'Timeless vanilla cake, perfect for any occasion',
             price: 400,
+            image: 'images/vanilla-classic.jpg',
             emoji: '🎂'
         },
         {
@@ -27,6 +30,7 @@ const products = {
             name: 'Red Velvet Elegance',
             description: 'Luxurious red velvet with cream cheese frosting',
             price: 550,
+            image: 'images/red-velvet-elegance.jpg',
             emoji: '❤️'
         },
         {
@@ -34,6 +38,7 @@ const products = {
             name: 'Carrot Cake Special',
             description: 'Moist carrot cake with cream cheese icing',
             price: 480,
+            image: 'images/carrot-cake-special.jpg',
             emoji: '🥕'
         },
         {
@@ -41,6 +46,7 @@ const products = {
             name: 'Eggless Chocolate',
             description: 'Delicious eggless chocolate cake',
             price: 420,
+            image: 'images/eggless-chocolate.jpg',
             emoji: '🍰'
         }
     ],
@@ -50,6 +56,7 @@ const products = {
             name: 'Chocolate Cupcake',
             description: 'Soft chocolate cupcake with ganache topping',
             price: 60,
+            image: 'images/chocolate-cupcake.jpg',
             emoji: '🧁'
         },
         {
@@ -57,6 +64,7 @@ const products = {
             name: 'Vanilla Delight',
             description: 'Classic vanilla cupcake with buttercream',
             price: 55,
+            image: 'images/vanilla-delight.jpg',
             emoji: '🤎'
         },
         {
@@ -64,6 +72,7 @@ const products = {
             name: 'Strawberry Bliss',
             description: 'Strawberry flavored with fresh cream',
             price: 70,
+            image: 'images/strawberry-bliss.jpg',
             emoji: '🍓'
         },
         {
@@ -71,6 +80,7 @@ const products = {
             name: 'Caramel Crunch',
             description: 'Caramel cupcake with crunchy toffee bits',
             price: 75,
+            image: 'images/caramel-crunch.jpg',
             emoji: '🍯'
         },
         {
@@ -78,6 +88,7 @@ const products = {
             name: 'Red Velvet Cupcake',
             description: 'Red velvet with cream cheese frosting',
             price: 80,
+            image: 'images/red-velvet-cupcake.jpg',
             emoji: '💓'
         },
         {
@@ -85,6 +96,7 @@ const products = {
             name: 'Lemon Zest',
             description: 'Fresh lemon cupcake with bright frosting',
             price: 65,
+            image: 'images/lemon-zest.jpg',
             emoji: '🍋'
         }
     ]

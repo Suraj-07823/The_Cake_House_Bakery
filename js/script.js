@@ -1,6 +1,6 @@
 // WhatsApp Configuration
 // IMPORTANT: Replace with your actual WhatsApp number (with country code, no spaces or symbols)
-const WHATSAPP_NUMBER = '919604785331'; // Example: India +91 number
+const WHATSAPP_NUMBER = '919822316064'; // Example: India +91 number
 
 // Function to create WhatsApp message link
 function createWhatsAppLink(productName, price, quantity = 1) {
@@ -32,8 +32,26 @@ function renderProducts(category, containerId) {
     categoryProducts.forEach(product => {
         const productCard = document.createElement('div');
         productCard.className = 'product-card';
+        
+        // Create image element - use actual image or fallback to emoji
+        let imageHTML = '';
+        if (product.image) {
+            imageHTML = `
+                <div class="product-image">
+                    <img 
+                        src="${product.image}" 
+                        alt="${product.name}"
+                        class="product-img"
+                        onerror="this.parentElement.innerHTML='<div class=\'emoji-fallback\'>${product.emoji}</div>'"
+                    >
+                </div>
+            `;
+        } else {
+            imageHTML = `<div class="product-image">${product.emoji}</div>`;
+        }
+        
         productCard.innerHTML = `
-            <div class="product-image">${product.emoji}</div>
+            ${imageHTML}
             <div class="product-info">
                 <h3 class="product-name">${product.name}</h3>
                 <p class="product-description">${product.description}</p>
