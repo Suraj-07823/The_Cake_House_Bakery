@@ -1,9 +1,10 @@
 // Custom Cake Builder Data
 const cakeResources = {
     size: [
-        { id: 1, name: '6 inch', price: 200, emoji: '🎂' },
-        { id: 2, name: '8 inch', price: 350, emoji: '🎂' },
-        { id: 3, name: '10 inch', price: 500, emoji: '🎂' }
+        { id: 1, name: '250 gm', price: 200, emoji: '🎂' },
+        { id: 2, name: '500 gm', price: 350, emoji: '🎂' },
+        { id: 3, name: '750 gm', price: 500, emoji: '🎂' },
+        { id: 4, name: '1 kg', price: 700, emoji: '🎂' }
     ],
     flavor: [
         { id: 1, name: 'Chocolate', price: 0, emoji: '🍫' },

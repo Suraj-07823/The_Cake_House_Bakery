@@ -83,6 +83,70 @@ function renderProducts(category, containerId) {
     });
 }
 
+// Function to render products with cart buttons
+function renderProductsWithCart(category, containerId) {
+    const container = document.getElementById(containerId);
+    
+    if (!container) {
+        console.error(`Container with ID "${containerId}" not found`);
+        return;
+    }
+
+    if (!products[category]) {
+        console.error(`Category "${category}" not found in products`);
+        return;
+    }
+
+    const categoryProducts = products[category];
+    
+    // Clear container
+    container.innerHTML = '';
+
+    // Create product cards
+    categoryProducts.forEach(product => {
+        const productCard = document.createElement('div');
+        productCard.className = 'product-card';
+        productCard.innerHTML = `
+            <div class="product-image">${product.emoji}</div>
+            <div class="product-info">
+                <h3 class="product-name">${product.name}</h3>
+                <p class="product-description">${product.description}</p>
+                <p class="product-price">₹${product.price}</p>
+                <button class="btn btn-primary add-to-cart-btn" data-product='${JSON.stringify({name: product.name, price: product.price, emoji: product.emoji, category: category})}'>
+                   🛒 Add to Cart
+                </button>
+            </div>
+        `;
+        container.appendChild(productCard);
+
+        // Add event listener to the add to cart button
+        const addBtn = productCard.querySelector('.add-to-cart-btn');
+        addBtn.addEventListener('click', function() {
+            const productData = JSON.parse(this.dataset.product);
+            if (!cartManager) {
+                alert('Cart system loading... please try again');
+                return;
+            }
+            
+            // Create a new order block if none exists
+            if (cartManager.orders.length === 0) {
+                currentOrderId = cartManager.addOrderBlock();
+            } else {
+                currentOrderId = cartManager.orders[0].id;
+            }
+            
+            // Add the product to the cart
+            cartManager.addItemToOrder(currentOrderId, {
+                ...productData,
+                quantity: 1
+            });
+            
+            // Show confirmation
+            alert(`✅ "${productData.name}" added to cart!`);
+        });
+    });
+}
+
 // Home page - Set up WhatsApp CTA
 document.addEventListener('DOMContentLoaded', function() {
     const whatsappCTA = document.getElementById('whatsapp-cta');

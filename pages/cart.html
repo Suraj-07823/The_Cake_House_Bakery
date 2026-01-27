@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shopping Cart - The Cake House</title>
+    <link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="container">
+            <div class="nav-content">
+                <h1 class="logo">🍰 The Cake House</h1>
+                <button class="hamburger" id="hamburger">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+                <ul class="nav-links" id="nav-menu">
+                    <li><a href="../index.html">Home</a></li>
+                    <li><a href="cakes.html">Cakes</a></li>
+                    <li><a href="cupcakes.html">Cupcakes</a></li>
+                    <li><a href="custom.html">Custom Cake</a></li>
+                    <li><a href="cart.html" class="active">🛒 Cart</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Page Header -->
+    <section class="page-header">
+        <div class="container">
+            <h1>Shopping Cart 🛒</h1>
+            <p>Review your items and place your order</p>
+        </div>
+    </section>
+
+    <!-- Cart Section -->
+    <section class="cart-section">
+        <div class="container">
+            <!-- Empty Cart Message -->
+            <div id="empty-cart" class="empty-cart-message">
+                <div class="empty-icon">🛒</div>
+                <h2>Your cart is empty</h2>
+                <p>Add items from cakes, cupcakes, or decorations to get started!</p>
+                <div class="empty-cart-buttons">
+                    <a href="cakes.html" class="btn btn-primary">Browse Cakes</a>
+                    <a href="../index.html#decorations" class="btn btn-primary">Browse Decorations</a>
+                </div>
+            </div>
+
+            <!-- Cart Items -->
+            <div id="cart-content" class="cart-content" style="display: none;">
+                <!-- Order Blocks will be rendered here -->
+                <div id="order-blocks" class="order-blocks"></div>
+
+                <!-- Cart Summary -->
+                <div class="cart-summary">
+                    <h2>Order Summary</h2>
+                    <div class="summary-details">
+                        <div class="summary-row">
+                            <span>Total Items:</span>
+                            <span id="total-items">0</span>
+                        </div>
+                        <div class="summary-row">
+                            <span>Total Price:</span>
+                            <span id="total-price">₹0</span>
+                        </div>
+                    </div>
+                    <div class="cart-actions">
+                        <button id="clear-cart" class="btn btn-secondary">Clear Cart</button>
+                        <button id="send-order" class="btn btn-primary">Send Order via WhatsApp</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Add Item Modal -->
+    <div id="add-item-modal" class="modal">
+        <div class="modal-content">
+            <span class="close-modal">&times;</span>
+            <h2>Add Item to Order</h2>
+            <div class="modal-body">
+                <div class="item-selector">
+                    <div class="selector-group">
+                        <h3>Select Item Type</h3>
+                        <div class="type-buttons">
+                            <button class="type-btn" data-type="cake">🎂 Cake</button>
+                            <button class="type-btn" data-type="cupcake">🧁 Cupcake</button>
+                            <button class="type-btn" data-type="decoration">🎀 Decoration</button>
+                        </div>
+                    </div>
+
+                    <div class="selector-group">
+                        <h3>Select Item</h3>
+                        <select id="item-select" class="item-input">
+                            <option value="">Choose an item...</option>
+                        </select>
+                    </div>
+
+                    <div class="selector-group">
+                        <h3>Quantity</h3>
+                        <input type="number" id="item-quantity" class="item-input" min="1" value="1">
+                    </div>
+
+                    <div class="item-preview">
+                        <p id="preview-price">Price: ₹0</p>
+                        <p id="preview-total">Total: ₹0</p>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-actions">
+                <button id="cancel-modal" class="btn btn-secondary">Cancel</button>
+                <button id="confirm-add" class="btn btn-primary">Add to Order Block</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2026 The Cake House. All cakes are baked fresh to order.</p>
+            <p class="contact-info">📱 Order via WhatsApp • 💳 Cash on Delivery & UPI</p>
+        </div>
+    </footer>
+
+    <script src="../js/products.js"></script>
+    <script src="../js/script.js"></script>
+    <script src="../js/cart.js"></script>
+</body>
+</html>

@@ -87,5 +87,49 @@ const products = {
             price: 65,
             emoji: '🍋'
         }
+    ],
+    decorations: [
+        {
+            id: 13,
+            name: 'Ribbons',
+            description: 'Elegant satin & fabric ribbons',
+            price: 100,
+            emoji: '🎀'
+        },
+        {
+            id: 14,
+            name: 'Candles',
+            description: 'Colorful decorative candles',
+            price: 65,
+            emoji: '🕯️'
+        },
+        {
+            id: 15,
+            name: 'Flowers',
+            description: 'Artificial & real flower toppers',
+            price: 175,
+            emoji: '🌸'
+        },
+        {
+            id: 16,
+            name: 'Edible Glitter',
+            description: 'Sparkling edible decorations',
+            price: 85,
+            emoji: '✨'
+        },
+        {
+            id: 17,
+            name: 'Balloons',
+            description: 'Colorful balloon arrangements',
+            price: 200,
+            emoji: '🎈'
+        },
+        {
+            id: 18,
+            name: 'Cake Toppers',
+            description: 'Personalized & themed toppers',
+            price: 105,
+            emoji: '🎂'
+        }
     ]
 };
