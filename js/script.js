@@ -1,6 +1,39 @@
 // WhatsApp Configuration
 // IMPORTANT: Replace with your actual WhatsApp number (with country code, no spaces or symbols)
-const WHATSAPP_NUMBER = '919822316064'; // Example: India +91 number
+const WHATSAPP_NUMBER = '91922316064'; // Example: India +91 number
+
+// Hamburger Menu Toggle
+document.addEventListener('DOMContentLoaded', function() {
+    const hamburger = document.getElementById('hamburger');
+    const navMenu = document.getElementById('nav-menu');
+    
+    if (hamburger) {
+        hamburger.addEventListener('click', function() {
+            hamburger.classList.toggle('active');
+            navMenu.classList.toggle('active');
+        });
+
+        // Close menu when a link is clicked
+        const navLinks = navMenu.querySelectorAll('a');
+        navLinks.forEach(link => {
+            link.addEventListener('click', function() {
+                hamburger.classList.remove('active');
+                navMenu.classList.remove('active');
+            });
+        });
+
+        // Close menu when clicking outside
+        document.addEventListener('click', function(event) {
+            const isClickInsideNav = navMenu.contains(event.target);
+            const isClickOnHamburger = hamburger.contains(event.target);
+            
+            if (!isClickInsideNav && !isClickOnHamburger && navMenu.classList.contains('active')) {
+                hamburger.classList.remove('active');
+                navMenu.classList.remove('active');
+            }
+        });
+    }
+});
 
 // Function to create WhatsApp message link
 function createWhatsAppLink(productName, price, quantity = 1) {
@@ -32,26 +65,8 @@ function renderProducts(category, containerId) {
     categoryProducts.forEach(product => {
         const productCard = document.createElement('div');
         productCard.className = 'product-card';
-        
-        // Create image element - use actual image or fallback to emoji
-        let imageHTML = '';
-        if (product.image) {
-            imageHTML = `
-                <div class="product-image">
-                    <img 
-                        src="${product.image}" 
-                        alt="${product.name}"
-                        class="product-img"
-                        onerror="this.parentElement.innerHTML='<div class=\'emoji-fallback\'>${product.emoji}</div>'"
-                    >
-                </div>
-            `;
-        } else {
-            imageHTML = `<div class="product-image">${product.emoji}</div>`;
-        }
-        
         productCard.innerHTML = `
-            ${imageHTML}
+            <div class="product-image">${product.emoji}</div>
             <div class="product-info">
                 <h3 class="product-name">${product.name}</h3>
                 <p class="product-description">${product.description}</p>
