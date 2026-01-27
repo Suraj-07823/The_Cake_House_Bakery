@@ -141,8 +141,10 @@ function renderProductsWithCart(category, containerId) {
                 quantity: 1
             });
             
-            // Show confirmation
-            alert(`✅ "${productData.name}" added to cart!`);
+            // Show toast notification
+            if (typeof Toast !== 'undefined') {
+                Toast.success(`"${productData.name}" added to cart!`);
+            }
         });
     });
 }

@@ -1,3 +1,63 @@
+// Toast Notification System
+class Toast {
+    static show(message, type = 'success', duration = 3000) {
+        // Create container if it doesn't exist
+        let container = document.getElementById('toast-container');
+        if (!container) {
+            container = document.createElement('div');
+            container.id = 'toast-container';
+            container.className = 'toast-container';
+            document.body.appendChild(container);
+        }
+
+        // Create toast element
+        const toast = document.createElement('div');
+        toast.className = `toast toast-${type}`;
+        toast.innerHTML = `
+            <div class="toast-content">
+                <span class="toast-message">${message}</span>
+                <button class="toast-close">&times;</button>
+            </div>
+        `;
+
+        // Add to container
+        container.appendChild(toast);
+
+        // Trigger animation
+        setTimeout(() => toast.classList.add('show'), 10);
+
+        // Close button
+        toast.querySelector('.toast-close').addEventListener('click', () => {
+            toast.classList.remove('show');
+            setTimeout(() => toast.remove(), 300);
+        });
+
+        // Auto remove
+        setTimeout(() => {
+            if (toast.parentElement) {
+                toast.classList.remove('show');
+                setTimeout(() => toast.remove(), 300);
+            }
+        }, duration);
+    }
+
+    static success(message, duration = 3000) {
+        this.show(`✅ ${message}`, 'success', duration);
+    }
+
+    static error(message, duration = 3000) {
+        this.show(`❌ ${message}`, 'error', duration);
+    }
+
+    static info(message, duration = 3000) {
+        this.show(`ℹ️ ${message}`, 'info', duration);
+    }
+
+    static warning(message, duration = 3000) {
+        this.show(`⚠️ ${message}`, 'warning', duration);
+    }
+}
+
 // Cart Management System
 class CartManager {
     constructor() {
@@ -33,6 +93,19 @@ class CartManager {
             });
             this.saveToStorage();
             return true;
+        }
+        return false;
+    }
+
+    updateItemQuantity(orderId, itemId, newQuantity) {
+        const order = this.orders.find(o => o.id === orderId);
+        if (order) {
+            const item = order.items.find(i => i.itemId === itemId);
+            if (item && newQuantity > 0) {
+                item.quantity = newQuantity;
+                this.saveToStorage();
+                return true;
+            }
         }
         return false;
     }
@@ -239,15 +312,23 @@ function createOrderBlockElement(order, blockNumber) {
         </div>
         <div class="block-items">
             ${order.items.map(item => `
-                <div class="block-item">
+                <div class="block-item" data-item-id="${item.itemId}">
                     <div class="item-details">
                         <span class="item-emoji">${item.emoji}</span>
                         <div class="item-info">
                             <p class="item-name">${item.name}</p>
                             <p class="item-category">${item.category}</p>
-                            <p class="item-pricing">
-                                ₹${item.price} x ${item.quantity} = <strong>₹${item.price * item.quantity}</strong>
-                            </p>
+                            <div class="item-editing">
+                                <div class="quantity-editor">
+                                    <label>Qty:</label>
+                                    <button class="qty-btn qty-minus" data-order-id="${order.id}" data-item-id="${item.itemId}">−</button>
+                                    <input type="number" class="qty-input" value="${item.quantity}" min="1" data-order-id="${order.id}" data-item-id="${item.itemId}">
+                                    <button class="qty-btn qty-plus" data-order-id="${order.id}" data-item-id="${item.itemId}">+</button>
+                                </div>
+                                <p class="item-pricing">
+                                    ₹${item.price} × <span class="qty-display">${item.quantity}</span> = <strong class="total-display">₹${item.price * item.quantity}</strong>
+                                </p>
+                            </div>
                         </div>
                     </div>
                     <button class="btn-remove-item" data-order-id="${order.id}" data-item-id="${item.itemId}" title="Remove item">
@@ -265,20 +346,83 @@ function createOrderBlockElement(order, blockNumber) {
     const deleteBlockBtn = block.querySelector('.btn-delete-block');
     const removeItemBtns = block.querySelectorAll('.btn-remove-item');
     const addItemBtn = block.querySelector('.btn-add-item');
+    const qtyInputs = block.querySelectorAll('.qty-input');
+    const qtyMinusBtns = block.querySelectorAll('.qty-minus');
+    const qtyPlusBtns = block.querySelectorAll('.qty-plus');
 
     deleteBlockBtn.addEventListener('click', (e) => {
-        if (confirm('Delete this entire order block?')) {
-            cartManager.removeOrderBlock(parseInt(e.target.dataset.orderId));
+        const orderId = parseInt(e.target.dataset.orderId);
+        const blockEl = block.querySelector('.block-header h3').textContent;
+        showConfirmation(`Delete ${blockEl}?`, () => {
+            cartManager.removeOrderBlock(orderId);
+            Toast.info('Order block deleted');
             renderCart();
-        }
+        });
     });
 
     removeItemBtns.forEach(btn => {
         btn.addEventListener('click', (e) => {
             const orderId = parseInt(e.target.dataset.orderId);
             const itemId = parseInt(e.target.dataset.itemId);
-            cartManager.removeItemFromOrder(orderId, itemId);
-            renderCart();
+            const itemName = block.querySelector(`[data-item-id="${itemId}"] .item-name`).textContent;
+            
+            const itemEl = block.querySelector(`[data-item-id="${itemId}"]`);
+            itemEl.classList.add('removing');
+            
+            setTimeout(() => {
+                cartManager.removeItemFromOrder(orderId, itemId);
+                Toast.info(`"${itemName}" removed`);
+                renderCart();
+            }, 300);
+        });
+    });
+
+    qtyInputs.forEach(input => {
+        input.addEventListener('change', (e) => {
+            const orderId = parseInt(e.target.dataset.orderId);
+            const itemId = parseInt(e.target.dataset.itemId);
+            const newQty = parseInt(e.target.value);
+            
+            if (newQty > 0) {
+                cartManager.updateItemQuantity(orderId, itemId, newQty);
+                updateItemDisplay(block, itemId);
+                Toast.success('Quantity updated');
+            } else {
+                e.target.value = cartManager.orders.find(o => o.id === orderId).items.find(i => i.itemId === itemId).quantity;
+                Toast.error('Quantity must be at least 1');
+            }
+        });
+    });
+
+    qtyMinusBtns.forEach(btn => {
+        btn.addEventListener('click', (e) => {
+            const orderId = parseInt(e.target.dataset.orderId);
+            const itemId = parseInt(e.target.dataset.itemId);
+            const currentOrder = cartManager.orders.find(o => o.id === orderId);
+            const currentItem = currentOrder.items.find(i => i.itemId === itemId);
+            const newQty = currentItem.quantity - 1;
+            
+            if (newQty > 0) {
+                cartManager.updateItemQuantity(orderId, itemId, newQty);
+                updateItemDisplay(block, itemId);
+                Toast.info('Quantity decreased');
+            } else {
+                Toast.warning('Quantity must be at least 1');
+            }
+        });
+    });
+
+    qtyPlusBtns.forEach(btn => {
+        btn.addEventListener('click', (e) => {
+            const orderId = parseInt(e.target.dataset.orderId);
+            const itemId = parseInt(e.target.dataset.itemId);
+            const currentOrder = cartManager.orders.find(o => o.id === orderId);
+            const currentItem = currentOrder.items.find(i => i.itemId === itemId);
+            const newQty = currentItem.quantity + 1;
+            
+            cartManager.updateItemQuantity(orderId, itemId, newQty);
+            updateItemDisplay(block, itemId);
+            Toast.success('Quantity increased');
         });
     });
 
@@ -288,6 +432,60 @@ function createOrderBlockElement(order, blockNumber) {
     });
 
     return block;
+}
+
+// Helper function to update item display without re-rendering
+function updateItemDisplay(blockEl, itemId) {
+    const itemEl = blockEl.querySelector(`[data-item-id="${itemId}"]`);
+    const order = cartManager.orders.find(o => {
+        return o.items.some(i => i.itemId === itemId);
+    });
+    
+    if (!order) return;
+    
+    const item = order.items.find(i => i.itemId === itemId);
+    if (!item) return;
+    
+    // Update quantity input
+    itemEl.querySelector('.qty-input').value = item.quantity;
+    
+    // Update quantity display
+    itemEl.querySelector('.qty-display').textContent = item.quantity;
+    
+    // Update total
+    itemEl.querySelector('.total-display').textContent = `₹${item.price * item.quantity}`;
+    
+    // Update summary
+    updateCartSummary();
+}
+
+// Confirmation dialog function
+function showConfirmation(message, onConfirm, onCancel = null) {
+    const modal = document.createElement('div');
+    modal.className = 'confirmation-modal';
+    modal.innerHTML = `
+        <div class="confirmation-content">
+            <p>${message}</p>
+            <div class="confirmation-buttons">
+                <button class="btn btn-secondary confirm-cancel">Cancel</button>
+                <button class="btn btn-primary confirm-ok">Yes, Delete</button>
+            </div>
+        </div>
+    `;
+    
+    document.body.appendChild(modal);
+    
+    modal.querySelector('.confirm-ok').addEventListener('click', () => {
+        modal.remove();
+        onConfirm();
+    });
+    
+    modal.querySelector('.confirm-cancel').addEventListener('click', () => {
+        modal.remove();
+        if (onCancel) onCancel();
+    });
+    
+    setTimeout(() => modal.classList.add('show'), 10);
 }
 
 // Update cart summary
@@ -351,7 +549,7 @@ function updateItemPreview() {
 // Handle add item
 function handleAddItem() {
     if (!itemSelect.value) {
-        alert('Please select an item');
+        Toast.warning('Please select an item');
         return;
     }
 
@@ -367,6 +565,7 @@ function handleAddItem() {
         quantity: quantity
     });
 
+    Toast.success(`"${item.name}" added to cart!`);
     closeItemModal();
     renderCart();
 }

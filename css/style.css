@@ -1298,6 +1298,268 @@ body {
 
     .empty-cart-message {
         padding: 50px 15px;
+
+    /* ===========================
+       Toast Notifications
+       =========================== */
+
+    .toast-container {
+        position: fixed;
+        bottom: 20px;
+        right: 20px;
+        z-index: 9999;
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+    }
+
+    .toast {
+        background-color: #fff;
+        padding: 16px 20px;
+        border-radius: 8px;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        min-width: 300px;
+        border-left: 4px solid #d4745f;
+        animation: slideIn 0.3s ease-out;
+        opacity: 0;
+    }
+
+    .toast.show {
+        opacity: 1;
+    }
+
+    .toast.toast-success {
+        border-left-color: #4caf50;
+    }
+
+    .toast.toast-error {
+        border-left-color: #f44336;
+    }
+
+    .toast.toast-warning {
+        border-left-color: #ff9800;
+    }
+
+    .toast.toast-info {
+        border-left-color: #2196f3;
+    }
+
+    .toast-content {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 15px;
+        width: 100%;
+    }
+
+    .toast-message {
+        color: #4a4a4a;
+        font-weight: 500;
+        flex-grow: 1;
+    }
+
+    .toast-close {
+        background: none;
+        border: none;
+        color: #999;
+        font-size: 20px;
+        cursor: pointer;
+        padding: 0;
+        display: flex;
+        align-items: center;
+        transition: color 0.3s ease;
+    }
+
+    .toast-close:hover {
+        color: #d4745f;
+    }
+
+    @keyframes slideIn {
+        from {
+            transform: translateX(400px);
+            opacity: 0;
+        }
+        to {
+            transform: translateX(0);
+            opacity: 1;
+        }
+    }
+
+    /* ===========================
+       Confirmation Modal
+       =========================== */
+
+    .confirmation-modal {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.5);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        z-index: 10000;
+    }
+
+    .confirmation-content {
+        background-color: #fff;
+        padding: 30px;
+        border-radius: 12px;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+        max-width: 400px;
+        width: 90%;
+        animation: popIn 0.3s ease-out;
+    }
+
+    .confirmation-content p {
+        color: #4a4a4a;
+        font-size: 1.1rem;
+        margin: 0 0 25px 0;
+        text-align: center;
+    }
+
+    .confirmation-buttons {
+        display: flex;
+        gap: 12px;
+    }
+
+    .confirmation-buttons .btn {
+        flex: 1;
+        padding: 12px;
+    }
+
+    @keyframes popIn {
+        from {
+            transform: scale(0.9);
+            opacity: 0;
+        }
+        to {
+            transform: scale(1);
+            opacity: 1;
+        }
+    }
+
+    /* ===========================
+       Quantity Editor
+       =========================== */
+
+    .item-editing {
+        margin-top: 10px;
+    }
+
+    .quantity-editor {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        margin-bottom: 10px;
+        background-color: #f9f9f9;
+        padding: 8px 12px;
+        border-radius: 6px;
+        width: fit-content;
+    }
+
+    .quantity-editor label {
+        font-weight: 600;
+        color: #4a4a4a;
+        font-size: 0.9rem;
+    }
+
+    .qty-btn {
+        background-color: #d4745f;
+        color: white;
+        border: none;
+        width: 30px;
+        height: 30px;
+        border-radius: 4px;
+        cursor: pointer;
+        font-size: 1.1rem;
+        font-weight: bold;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: all 0.2s ease;
+    }
+
+    .qty-btn:hover {
+        background-color: #c25a45;
+        transform: scale(1.1);
+    }
+
+    .qty-btn:active {
+        transform: scale(0.95);
+    }
+
+    .qty-input {
+        width: 50px;
+        padding: 6px;
+        border: 2px solid #ffe4d6;
+        border-radius: 4px;
+        text-align: center;
+        font-weight: 600;
+        color: #4a4a4a;
+        font-size: 0.95rem;
+    }
+
+    .qty-input:focus {
+        outline: none;
+        border-color: #d4745f;
+    }
+
+    /* Item removal animation */
+    .block-item.removing {
+        animation: slideOut 0.3s ease-out forwards;
+    }
+
+    @keyframes slideOut {
+        from {
+            opacity: 1;
+            transform: translateX(0);
+        }
+        to {
+            opacity: 0;
+            transform: translateX(100%);
+        }
+    }
+
+    /* Item adding animation */
+    .block-item {
+        animation: fadeIn 0.3s ease-out;
+    }
+
+    @keyframes fadeIn {
+        from {
+            opacity: 0;
+            transform: translateY(10px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    @media (max-width: 480px) {
+        .toast-container {
+            right: 10px;
+            left: 10px;
+            bottom: 10px;
+        }
+
+        .toast {
+            min-width: auto;
+        }
+
+        .confirmation-content {
+            padding: 20px;
+        }
+
+        .quantity-editor {
+            width: 100%;
+        }
+    }
     }
 }
 
