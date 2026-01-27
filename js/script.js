@@ -1,6 +1,6 @@
 // WhatsApp Configuration
 // IMPORTANT: Replace with your actual WhatsApp number (with country code, no spaces or symbols)
-const WHATSAPP_NUMBER = '91922316064'; // Example: India +91 number
+const WHATSAPP_NUMBER = '919822316064'; // Example: India +91 number
 
 // Hamburger Menu Toggle
 document.addEventListener('DOMContentLoaded', function() {
