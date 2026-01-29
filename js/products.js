@@ -99,5 +99,49 @@ const products = {
             image: 'images/lemon-zest.jpg',
             emoji: '🍋'
         }
+    ],
+    decorations: [
+        {
+            id: 101,
+            name: 'Ribbons',
+            description: 'Elegant satin & fabric ribbons',
+            price: 100,
+            emoji: '🎀'
+        },
+        {
+            id: 102,
+            name: 'Candles',
+            description: 'Colorful decorative candles',
+            price: 80,
+            emoji: '🕯️'
+        },
+        {
+            id: 103,
+            name: 'Flowers',
+            description: 'Artificial & real flower toppers',
+            price: 150,
+            emoji: '🌸'
+        },
+        {
+            id: 104,
+            name: 'Edible Glitter',
+            description: 'Sparkling edible decorations',
+            price: 100,
+            emoji: '✨'
+        },
+        {
+            id: 105,
+            name: 'Balloons',
+            description: 'Colorful balloon arrangements',
+            price: 200,
+            emoji: '🎈'
+        },
+        {
+            id: 106,
+            name: 'Cake Toppers',
+            description: 'Personalized & themed toppers',
+            price: 120,
+            emoji: '🎂'
+        }
     ]
 };

@@ -43,6 +43,7 @@ body {
     justify-content: flex-start;
     align-items: center;
     gap: 2rem;
+    flex-wrap: nowrap;
 }
 
 /* Push nav items (cart + links) to the right while keeping the logo on the left */
@@ -65,15 +66,16 @@ body {
 .nav-center {
     display: flex;
     align-items: center;
-    gap: 2rem;
-    flex: 1;
+    gap: 1rem; /* tightened spacing between cart and links on desktop */
     justify-content: flex-start;
+    flex-wrap: nowrap;
 }
 
 .navbar-actions {
     display: flex;
     align-items: center;
     gap: 1rem;
+    white-space: nowrap; /* prevent cart/hamburger from wrapping */
 }
 
 .cart-badge {
@@ -86,6 +88,11 @@ body {
     position: relative;
     transition: transform 0.2s ease;
     white-space: nowrap;
+}
+
+.cart-badge,
+.hamburger {
+    flex-shrink: 0; /* keep these from shrinking/wrapping */
 }
 
 .cart-badge:hover {
@@ -470,6 +477,8 @@ body {
     text-align: center;
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
     transition: all 0.3s ease;
+    display: flex;
+    flex-direction: column;
 }
 
 .decoration-card:hover {
@@ -494,13 +503,21 @@ body {
     color: #888;
     font-size: 0.9rem;
     margin-bottom: 12px;
+    flex-grow: 1;
 }
 
 .deco-price {
     display: block;
-    font-size: 1.1rem;
+    font-size: 1.3rem;
     font-weight: 700;
     color: #d4745f;
+    margin-bottom: 15px;
+}
+
+.decoration-card .btn {
+    width: 100%;
+    padding: 12px;
+}
 }
 
 .deco-note {
@@ -600,6 +617,22 @@ body {
    Responsive Design
    =========================== */
 
+/* Desktop: keep cart + links right-aligned */
+@media (min-width: 769px) {
+    .nav-center {
+        margin-left: auto;
+        justify-content: flex-end;
+    }
+
+    .hamburger {
+        display: none;
+    }
+
+    .nav-center .nav-links {
+        display: flex;
+    }
+}
+
 @media (max-width: 768px) {
     /* Hamburger Menu for tablets */
     .hamburger {
@@ -610,29 +643,47 @@ body {
         gap: 0.5rem;
     }
 
+    /* Allow logo to shrink so cart + hamburger can stay visible side-by-side */
+    .logo-link {
+        flex-shrink: 1;
+        min-width: 0;
+    }
+
     .nav-center {
+        min-width: 0;
+    }
+
+    /* Mobile: keep cart and hamburger left, logo after them */
+    .nav-center {
+        position: static;
+        background-color: transparent;
+        flex-direction: row;
+        gap: 0.75rem;
+        padding: 0;
+        display: flex;
+        z-index: 99;
+        box-shadow: none;
+        flex: none;
+        justify-content: flex-start;
+        width: auto;
+        order: 0;
+    }
+
+    /* Keep nav-links hidden until menu is toggled */
+    .nav-center .nav-links {
+        display: none;
+    }
+
+    .nav-center.active .nav-links {
+        display: flex;
         position: absolute;
         top: 60px;
         left: 0;
         right: 0;
         background-color: #fff5f0;
         flex-direction: column;
-        gap: 0;
-        padding: 0;
-        display: none;
-        z-index: 99;
-        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-        flex: none;
-        justify-content: flex-start;
-        width: 100%;
-    }
-
-    .nav-center.active {
-        display: flex;
-    }
-
-    .nav-center.active .cart-badge {
-        display: none;
+        padding: 16px 20px;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.08);
     }
 
     .cart-badge {
@@ -643,6 +694,7 @@ body {
         height: 40px;
         margin: 0;
         padding: 0;
+        order: 0;
     }
 
     .cart-icon {
@@ -663,7 +715,7 @@ body {
         background-color: transparent;
         flex-direction: column;
         gap: 0;
-        padding: 20px;
+        padding: 0;
         display: flex;
         z-index: 99;
         box-shadow: none;
@@ -1509,7 +1561,7 @@ body {
     }
 
     /* ===========================
-       Confirmation Modal
+       Confirmation Modal (Delete Block)
        =========================== */
 
     .confirmation-modal {
@@ -1518,47 +1570,122 @@ body {
         left: 0;
         width: 100%;
         height: 100%;
-        background-color: rgba(0, 0, 0, 0.5);
+        background: rgba(0, 0, 0, 0.7);
         display: flex;
         align-items: center;
         justify-content: center;
         z-index: 10000;
+        backdrop-filter: blur(5px);
     }
 
     .confirmation-content {
-        background-color: #fff;
-        padding: 30px;
-        border-radius: 12px;
-        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
-        max-width: 400px;
-        width: 90%;
-        animation: popIn 0.3s ease-out;
+        background: linear-gradient(180deg, #fff9f6 0%, #fff5f0 100%);
+        padding: 50px 40px;
+        border-radius: 20px;
+        box-shadow: 0 20px 60px rgba(0, 0, 0, 0.4), inset 0 0 0 2px rgba(212, 116, 95, 0.2);
+        max-width: 450px;
+        width: 95%;
+        animation: scaleUp 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+        border: 3px solid #d4745f;
+        text-align: center;
+        position: relative;
+    }
+
+    .confirmation-content::before {
+        content: '⚠️';
+        display: block;
+        font-size: 5rem;
+        margin-bottom: 25px;
+        animation: bounce 0.8s ease-out;
+        filter: drop-shadow(0 2px 4px rgba(212, 116, 95, 0.3));
     }
 
     .confirmation-content p {
-        color: #4a4a4a;
-        font-size: 1.1rem;
-        margin: 0 0 25px 0;
-        text-align: center;
+        color: #2a2a2a;
+        font-size: 1.3rem;
+        font-weight: 700;
+        margin: 0 0 15px 0;
+        line-height: 1.6;
+        letter-spacing: -0.3px;
+    }
+
+    .confirmation-content p:last-of-type {
+        font-size: 1rem;
+        color: #d4745f;
+        font-weight: 600;
+        margin-bottom: 35px;
+        background-color: rgba(212, 116, 95, 0.1);
+        padding: 12px 16px;
+        border-radius: 8px;
+        border-left: 4px solid #d4745f;
     }
 
     .confirmation-buttons {
         display: flex;
         gap: 12px;
+        justify-content: center;
     }
 
     .confirmation-buttons .btn {
         flex: 1;
-        padding: 12px;
+        min-width: 140px;
+        padding: 16px 24px;
+        font-weight: 700;
+        letter-spacing: 0.5px;
+        transition: all 0.3s ease;
+        font-size: 1.05rem;
+        border-radius: 50px;
+        border: none;
     }
 
-    @keyframes popIn {
+    .confirmation-buttons .btn-secondary {
+        background-color: #f0f0f0;
+        color: #4a4a4a;
+        border: 2px solid #e0e0e0;
+    }
+
+    .confirmation-buttons .btn-secondary:hover {
+        background-color: #e8e8e8;
+        transform: translateY(-3px);
+        box-shadow: 0 6px 16px rgba(0, 0, 0, 0.12);
+    }
+
+    .confirmation-buttons .btn-primary {
+        background: linear-gradient(135deg, #d4745f 0%, #c15a48 100%);
+        color: white;
+        border: none;
+    }
+
+    .confirmation-buttons .btn-primary:hover {
+        box-shadow: 0 10px 25px rgba(212, 116, 95, 0.5);
+        transform: translateY(-3px);
+    }
+
+    .confirmation-buttons .btn-primary:disabled {
+        opacity: 0.8;
+    }
+
+    @keyframes scaleUp {
         from {
-            transform: scale(0.9);
+            transform: scale(0.7) translateY(-50px);
             opacity: 0;
         }
         to {
-            transform: scale(1);
+            transform: scale(1) translateY(0);
+            opacity: 1;
+        }
+    }
+
+    @keyframes bounce {
+        0% {
+            transform: scale(0) rotateY(0deg);
+            opacity: 0;
+        }
+        50% {
+            transform: scale(1.2) rotateY(10deg);
+        }
+        100% {
+            transform: scale(1) rotateY(0deg);
             opacity: 1;
         }
     }

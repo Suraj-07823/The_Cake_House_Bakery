@@ -139,7 +139,11 @@ class CartManager {
     }
 
     getTotalItems() {
-        return this.orders.reduce((total, order) => total + order.items.length, 0);
+        return this.orders.reduce((total, order) => {
+            return total + order.items.reduce((orderTotal, item) => {
+                return orderTotal + (item.quantity || 1);
+            }, 0);
+        }, 0);
     }
 
     getTotalPrice() {
@@ -470,26 +474,40 @@ function showConfirmation(message, onConfirm, onCancel = null) {
     modal.innerHTML = `
         <div class="confirmation-content">
             <p>${message}</p>
+            <p>This action cannot be undone.</p>
             <div class="confirmation-buttons">
-                <button class="btn btn-secondary confirm-cancel">Cancel</button>
-                <button class="btn btn-primary confirm-ok">Yes, Delete</button>
+                <button class="btn btn-secondary confirm-cancel">Keep It</button>
+                <button class="btn btn-primary confirm-ok">Delete Now</button>
             </div>
         </div>
     `;
     
     document.body.appendChild(modal);
     
-    modal.querySelector('.confirm-ok').addEventListener('click', () => {
-        modal.remove();
-        onConfirm();
+    const confirmBtn = modal.querySelector('.confirm-ok');
+    const cancelBtn = modal.querySelector('.confirm-cancel');
+    
+    confirmBtn.addEventListener('click', () => {
+        confirmBtn.disabled = true;
+        confirmBtn.textContent = '🗑️ Deleting...';
+        setTimeout(() => {
+            modal.remove();
+            onConfirm();
+        }, 300);
     });
     
-    modal.querySelector('.confirm-cancel').addEventListener('click', () => {
+    cancelBtn.addEventListener('click', () => {
         modal.remove();
         if (onCancel) onCancel();
     });
     
-    setTimeout(() => modal.classList.add('show'), 10);
+    // Allow clicking outside modal to cancel
+    modal.addEventListener('click', (e) => {
+        if (e.target === modal) {
+            modal.remove();
+            if (onCancel) onCancel();
+        }
+    });
 }
 
 // Update cart summary

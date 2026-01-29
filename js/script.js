@@ -7,30 +7,57 @@ function updateCartCount() {
     const cartCountEl = document.getElementById('cart-count');
     if (!cartCountEl) return;
 
-    // If cartManager instance is available, use it
-    if (typeof cartManager !== 'undefined') {
-        try {
+    // Primary: use cartManager when available (accurate quantities)
+    try {
+        if (typeof cartManager !== 'undefined' && cartManager && typeof cartManager.getTotalItems === 'function') {
             const totalItems = cartManager.getTotalItems();
-            cartCountEl.textContent = totalItems;
+            window.requestAnimationFrame(() => {
+                cartCountEl.textContent = totalItems;
+                if (cartCountEl.parentElement) {
+                    cartCountEl.parentElement.style.display = totalItems > 0 ? 'inline-flex' : 'none';
+                }
+            });
             return;
-        } catch (e) {
-            console.warn('cartManager exists but failed to read items', e);
         }
+    } catch (e) {
+        console.warn('cartManager exists but failed to read items', e);
     }
 
-    // Fallback: read from localStorage so homepage (which may not load cart.js) shows correct count
+    // Secondary: fallback to parsing localStorage (some pages may not load cart.js)
     try {
         const saved = localStorage.getItem('cakeHouseOrders');
         if (!saved) {
-            cartCountEl.textContent = '0';
+            window.requestAnimationFrame(() => {
+                cartCountEl.textContent = '0';
+                if (cartCountEl.parentElement) cartCountEl.parentElement.style.display = 'none';
+            });
             return;
         }
-        const orders = JSON.parse(saved);
-        const total = Array.isArray(orders) ? orders.reduce((sum, o) => sum + (Array.isArray(o.items) ? o.items.length : 0), 0) : 0;
-        cartCountEl.textContent = total;
+
+        const orders = JSON.parse(saved || '[]');
+        let total = 0;
+        if (Array.isArray(orders)) {
+            orders.forEach(o => {
+                if (o && Array.isArray(o.items)) {
+                    o.items.forEach(it => {
+                        total += Number(it.quantity || 0);
+                    });
+                }
+            });
+        }
+
+        window.requestAnimationFrame(() => {
+            cartCountEl.textContent = total;
+            if (cartCountEl.parentElement) {
+                cartCountEl.parentElement.style.display = total > 0 ? 'inline-flex' : 'none';
+            }
+        });
     } catch (err) {
         console.error('Error reading cart from localStorage', err);
-        cartCountEl.textContent = '0';
+        window.requestAnimationFrame(() => {
+            cartCountEl.textContent = '0';
+            if (cartCountEl.parentElement) cartCountEl.parentElement.style.display = 'none';
+        });
     }
 }
 
