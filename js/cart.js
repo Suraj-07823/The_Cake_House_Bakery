@@ -469,8 +469,11 @@ function updateItemDisplay(blockEl, itemId) {
 
 // Confirmation dialog function
 function showConfirmation(message, onConfirm, onCancel = null) {
+    console.log('🗑️ Delete confirmation triggered:', message);
+    
     const modal = document.createElement('div');
     modal.className = 'confirmation-modal';
+    modal.style.display = 'flex'; // Ensure it's visible
     modal.innerHTML = `
         <div class="confirmation-content">
             <p>${message}</p>
@@ -483,6 +486,7 @@ function showConfirmation(message, onConfirm, onCancel = null) {
     `;
     
     document.body.appendChild(modal);
+    console.log('✅ Modal added to DOM');
     
     const confirmBtn = modal.querySelector('.confirm-ok');
     const cancelBtn = modal.querySelector('.confirm-cancel');

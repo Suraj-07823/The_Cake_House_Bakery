@@ -72,6 +72,13 @@ document.addEventListener('DOMContentLoaded', function() {
     // Listen for storage changes (cart updates from other tabs/windows)
     window.addEventListener('storage', updateCartCount);
     
+    // Global event listener for all "Add to Cart" buttons (including decorations)
+    document.addEventListener('click', function(e) {
+        if (e.target.closest('.add-to-cart-btn')) {
+            handleAddToCart(e);
+        }
+    });
+    
     if (hamburger && navCenter) {
         hamburger.addEventListener('click', function() {
             hamburger.classList.toggle('active');
