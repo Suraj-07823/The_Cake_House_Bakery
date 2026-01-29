@@ -55,6 +55,45 @@ body {
     text-decoration: none;
 }
 
+.navbar-actions {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.cart-badge {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    text-decoration: none;
+    color: #d4745f;
+    font-weight: 600;
+    position: relative;
+    transition: transform 0.2s ease;
+}
+
+.cart-badge:hover {
+    transform: scale(1.1);
+}
+
+.cart-icon {
+    font-size: 1.5rem;
+}
+
+.cart-count {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 24px;
+    height: 24px;
+    background-color: #d4745f;
+    color: white;
+    border-radius: 50%;
+    font-size: 0.75rem;
+    font-weight: 700;
+    padding: 0 6px;
+}
+
 .nav-links {
     display: flex;
     list-style: none;
@@ -161,6 +200,12 @@ body {
     border: none;
     cursor: pointer;
     font-size: 1rem;
+    will-change: transform, background-color;
+}
+
+.btn:disabled {
+    opacity: 0.7;
+    cursor: not-allowed;
 }
 
 .btn-primary {
@@ -168,7 +213,7 @@ body {
     color: #fff;
 }
 
-.btn-primary:hover {
+.btn-primary:hover:not(:disabled) {
     background-color: #c15a48;
     transform: translateY(-2px);
     box-shadow: 0 4px 12px rgba(212, 116, 95, 0.3);
@@ -535,6 +580,34 @@ body {
     /* Hamburger Menu for tablets */
     .hamburger {
         display: flex;
+    }
+
+    .navbar-actions {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+    }
+
+    .cart-badge {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 40px;
+        height: 40px;
+        margin: 0;
+    }
+
+    .cart-icon {
+        font-size: 1.3rem;
+    }
+
+    .cart-count {
+        position: absolute;
+        top: -5px;
+        right: -5px;
+        min-width: 20px;
+        height: 20px;
+        font-size: 0.65rem;
     }
 
     .nav-links {

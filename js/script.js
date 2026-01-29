@@ -2,10 +2,25 @@
 // IMPORTANT: Replace with your actual WhatsApp number (with country code, no spaces or symbols)
 const WHATSAPP_NUMBER = '919822316064'; // Example: India +91 number
 
+// Update cart count display
+function updateCartCount() {
+    const cartCountEl = document.getElementById('cart-count');
+    if (cartCountEl && typeof cartManager !== 'undefined') {
+        const totalItems = cartManager.getTotalItems();
+        cartCountEl.textContent = totalItems;
+    }
+}
+
 // Hamburger Menu Toggle
 document.addEventListener('DOMContentLoaded', function() {
     const hamburger = document.getElementById('hamburger');
     const navMenu = document.getElementById('nav-menu');
+    
+    // Update cart count on page load
+    updateCartCount();
+    
+    // Listen for storage changes (cart updates from other tabs/windows)
+    window.addEventListener('storage', updateCartCount);
     
     if (hamburger) {
         hamburger.addEventListener('click', function() {
@@ -112,41 +127,60 @@ function renderProductsWithCart(category, containerId) {
                 <h3 class="product-name">${product.name}</h3>
                 <p class="product-description">${product.description}</p>
                 <p class="product-price">₹${product.price}</p>
-                <button class="btn btn-primary add-to-cart-btn" data-product='${JSON.stringify({name: product.name, price: product.price, emoji: product.emoji, category: category})}'>
+                <button class="btn btn-primary add-to-cart-btn" data-product-name="${product.name}" data-product-price="${product.price}" data-product-emoji="${product.emoji}" data-product-category="${category}">
                    🛒 Add to Cart
                 </button>
             </div>
         `;
         container.appendChild(productCard);
-
-        // Add event listener to the add to cart button
-        const addBtn = productCard.querySelector('.add-to-cart-btn');
-        addBtn.addEventListener('click', function() {
-            const productData = JSON.parse(this.dataset.product);
-            if (!cartManager) {
-                alert('Cart system loading... please try again');
-                return;
-            }
-            
-            // Create a new order block if none exists
-            if (cartManager.orders.length === 0) {
-                currentOrderId = cartManager.addOrderBlock();
-            } else {
-                currentOrderId = cartManager.orders[0].id;
-            }
-            
-            // Add the product to the cart
-            cartManager.addItemToOrder(currentOrderId, {
-                ...productData,
-                quantity: 1
-            });
-            
-            // Show toast notification
-            if (typeof Toast !== 'undefined') {
-                Toast.success(`"${productData.name}" added to cart!`);
-            }
-        });
     });
+
+    // Add delegated event listener once per container
+    container.removeEventListener('click', handleAddToCart);
+    container.addEventListener('click', handleAddToCart);
+}
+
+function handleAddToCart(event) {
+    const addBtn = event.target.closest('.add-to-cart-btn');
+    if (!addBtn) return;
+    
+    // Prevent multiple clicks
+    if (addBtn.disabled) return;
+    addBtn.disabled = true;
+    
+    const productData = {
+        name: addBtn.dataset.productName,
+        price: parseInt(addBtn.dataset.productPrice),
+        emoji: addBtn.dataset.productEmoji,
+        category: addBtn.dataset.productCategory,
+        quantity: 1
+    };
+    
+    if (!cartManager) {
+        alert('Cart system loading... please try again');
+        addBtn.disabled = false;
+        return;
+    }
+    
+    // Create a new order block if none exists
+    if (cartManager.orders.length === 0) {
+        currentOrderId = cartManager.addOrderBlock();
+    } else {
+        currentOrderId = cartManager.orders[0].id;
+    }
+    
+    // Add the product to the cart
+    cartManager.addItemToOrder(currentOrderId, productData);
+    
+    // Show toast notification
+    if (typeof Toast !== 'undefined') {
+        Toast.success(`"${productData.name}" added to cart!`);
+    }
+    
+    // Re-enable button after animation
+    setTimeout(() => {
+        addBtn.disabled = false;
+    }, 300);
 }
 
 // Home page - Set up WhatsApp CTA

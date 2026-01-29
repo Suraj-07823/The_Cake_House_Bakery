@@ -71,6 +71,10 @@ class CartManager {
 
     saveToStorage() {
         localStorage.setItem('cakeHouseOrders', JSON.stringify(this.orders));
+        // Update cart count in navbar with requestAnimationFrame for better performance
+        if (typeof updateCartCount !== 'undefined') {
+            requestAnimationFrame(updateCartCount);
+        }
     }
 
     addOrderBlock() {
