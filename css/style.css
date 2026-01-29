@@ -40,9 +40,14 @@ body {
 
 .nav-content {
     display: flex;
-    justify-content: space-between;
+    justify-content: flex-start;
     align-items: center;
     gap: 2rem;
+}
+
+/* Push nav items (cart + links) to the right while keeping the logo on the left */
+.nav-center {
+    margin-left: auto;
 }
 
 .logo {
@@ -144,6 +149,14 @@ body {
     cursor: pointer;
     gap: 6px;
     padding: 0;
+}
+
+/* On larger screens push hamburger to the far right */
+@media (min-width: 769px) {
+    /* Ensure hamburger stays with the right-aligned nav items */
+    .hamburger {
+        margin-left: 0;
+    }
 }
 
 .hamburger span {
