@@ -20,7 +20,7 @@ body {
 }
 
 .container {
-    max-width: 1200px;
+    max-width: 100%;
     margin: 0 auto;
     padding: 0 20px;
 }
@@ -42,6 +42,7 @@ body {
     display: flex;
     justify-content: space-between;
     align-items: center;
+    gap: 2rem;
 }
 
 .logo {
@@ -53,6 +54,15 @@ body {
 
 .logo-link {
     text-decoration: none;
+    flex-shrink: 0;
+}
+
+.nav-center {
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+    flex: 1;
+    justify-content: flex-start;
 }
 
 .navbar-actions {
@@ -70,6 +80,7 @@ body {
     font-weight: 600;
     position: relative;
     transition: transform 0.2s ease;
+    white-space: nowrap;
 }
 
 .cart-badge:hover {
@@ -582,10 +593,33 @@ body {
         display: flex;
     }
 
-    .navbar-actions {
-        display: flex;
-        align-items: center;
+    .nav-content {
         gap: 0.5rem;
+    }
+
+    .nav-center {
+        position: absolute;
+        top: 60px;
+        left: 0;
+        right: 0;
+        background-color: #fff5f0;
+        flex-direction: column;
+        gap: 0;
+        padding: 0;
+        display: none;
+        z-index: 99;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        flex: none;
+        justify-content: flex-start;
+        width: 100%;
+    }
+
+    .nav-center.active {
+        display: flex;
+    }
+
+    .nav-center.active .cart-badge {
+        display: none;
     }
 
     .cart-badge {
@@ -595,6 +629,7 @@ body {
         width: 40px;
         height: 40px;
         margin: 0;
+        padding: 0;
     }
 
     .cart-icon {
@@ -611,17 +646,15 @@ body {
     }
 
     .nav-links {
-        position: absolute;
-        top: 60px;
-        left: 0;
-        right: 0;
-        background-color: #fff5f0;
+        position: static;
+        background-color: transparent;
         flex-direction: column;
         gap: 0;
         padding: 20px;
-        display: none;
+        display: flex;
         z-index: 99;
-        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        box-shadow: none;
+        width: 100%;
     }
 
     .nav-links li {
@@ -640,14 +673,6 @@ body {
 
     .nav-links a.active::after {
         display: none;
-    }
-
-    .nav-links.active {
-        display: flex;
-    }
-
-    .nav-links {
-        gap: 1rem;
     }
 
     .hero-content h2 {
@@ -1060,8 +1085,13 @@ body {
 .item-pricing {
     color: #d4745f;
     font-weight: 700;
-    margin: 0;
-    font-size: 0.95rem;
+    margin: 8px 0 0 0;
+    font-size: 1rem;
+    background: linear-gradient(135deg, #fff9f7 0%, #fffbf9 100%);
+    padding: 8px 12px;
+    border-radius: 8px;
+    border-left: 4px solid #d4745f;
+    display: fit-content;
 }
 
 .btn-remove-item {
@@ -1525,65 +1555,75 @@ body {
        =========================== */
 
     .item-editing {
-        margin-top: 10px;
+        margin-top: 12px;
     }
 
     .quantity-editor {
         display: flex;
         align-items: center;
-        gap: 10px;
-        margin-bottom: 10px;
-        background-color: #f9f9f9;
-        padding: 8px 12px;
-        border-radius: 6px;
+        gap: 12px;
+        margin-bottom: 12px;
+        background: linear-gradient(135deg, #fff9f7 0%, #fffbf9 100%);
+        padding: 10px 14px;
+        border-radius: 12px;
         width: fit-content;
+        border: 2px solid #ffe4d6;
+        box-shadow: 0 2px 8px rgba(212, 116, 95, 0.08);
     }
 
     .quantity-editor label {
-        font-weight: 600;
-        color: #4a4a4a;
-        font-size: 0.9rem;
+        font-weight: 700;
+        color: #d4745f;
+        font-size: 0.95rem;
+        min-width: 40px;
     }
 
     .qty-btn {
-        background-color: #d4745f;
+        background: linear-gradient(135deg, #d4745f 0%, #c25a45 100%);
         color: white;
         border: none;
-        width: 30px;
-        height: 30px;
-        border-radius: 4px;
+        width: 36px;
+        height: 36px;
+        border-radius: 50%;
         cursor: pointer;
-        font-size: 1.1rem;
+        font-size: 1.2rem;
         font-weight: bold;
         display: flex;
         align-items: center;
         justify-content: center;
-        transition: all 0.2s ease;
+        transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+        box-shadow: 0 2px 6px rgba(212, 116, 95, 0.2);
+        flex-shrink: 0;
     }
 
     .qty-btn:hover {
-        background-color: #c25a45;
-        transform: scale(1.1);
+        background: linear-gradient(135deg, #c25a45 0%, #a83f2d 100%);
+        transform: scale(1.12);
+        box-shadow: 0 4px 12px rgba(212, 116, 95, 0.35);
     }
 
     .qty-btn:active {
-        transform: scale(0.95);
+        transform: scale(0.94);
     }
 
     .qty-input {
-        width: 50px;
-        padding: 6px;
-        border: 2px solid #ffe4d6;
-        border-radius: 4px;
+        width: 60px;
+        padding: 8px 10px;
+        border: 2px solid #d4745f;
+        border-radius: 10px;
         text-align: center;
-        font-weight: 600;
-        color: #4a4a4a;
-        font-size: 0.95rem;
+        font-weight: 700;
+        color: #d4745f;
+        font-size: 1rem;
+        background-color: #fff;
+        transition: all 0.2s ease;
     }
 
     .qty-input:focus {
         outline: none;
-        border-color: #d4745f;
+        border-color: #c25a45;
+        box-shadow: 0 0 0 3px rgba(212, 116, 95, 0.1);
+        background-color: #fffbf9;
     }
 
     /* Item removal animation */
