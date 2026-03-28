@@ -250,4 +250,43 @@ document.addEventListener('DOMContentLoaded', function() {
         whatsappCTA.target = '_blank';
         whatsappCTA.rel = 'noopener noreferrer';
     }
+
+    // --- UI Professionalization Scroll Animations ---
+    const animateElements = document.querySelectorAll('.category-card, .feature, .decoration-card, .cta, .page-header, .hero-content, .empty-cart-message, .order-block');
+    animateElements.forEach((el, index) => {
+        el.classList.add('fade-in');
+        el.style.transitionDelay = `${(index % 4) * 0.1}s`;
+    });
+
+    const observer = new IntersectionObserver((entries, obs) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('show');
+                obs.unobserve(entry.target);
+            }
+        });
+    }, { threshold: 0.15 });
+
+    document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+
+    // Observe dynamically added product cards and order blocks
+    const observeDynamicGrids = () => {
+        const dynamicContainers = document.querySelectorAll('.product-grid, .order-blocks');
+        dynamicContainers.forEach(container => {
+            new MutationObserver(mutations => {
+                let delayIndex = 0;
+                mutations.forEach(m => {
+                    m.addedNodes.forEach(node => {
+                        if (node.nodeType === 1 && (node.classList.contains('product-card') || node.classList.contains('order-block'))) {
+                            node.classList.add('fade-in');
+                            node.style.transitionDelay = `${(delayIndex % 4) * 0.1}s`;
+                            delayIndex++;
+                            observer.observe(node);
+                        }
+                    });
+                });
+            }).observe(container, { childList: true });
+        });
+    };
+    observeDynamicGrids();
 });
