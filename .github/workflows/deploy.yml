@@ -72,11 +72,11 @@ jobs:
     - name: Deployment Notification
       if: success()
       run: |
-        echo "✅ Deployment Successful!"
-        echo "🌐 Your site is live"
+        echo "Deployment Successful!"
+        echo "Your site is live"
 
     - name: Deployment Failed
       if: failure()
       run: |
-        echo "❌ Deployment Failed!"
+        echo "Deployment Failed!"
         exit 1
