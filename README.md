@@ -17,38 +17,6 @@ A mobile-first bakery website with WhatsApp integration and custom cake builder.
 - Git
 - Node.js (for local development)
 
-### Installation
-
-1. Clone the repository:
-```bash
-git clone https://github.com/YOUR-USERNAME/cake-shop.git
-cd cake-shop
-```
-
-2. Install dependencies:
-```bash
-npm install
-```
-
-3. Update WhatsApp number in `js/script.js`:
-```javascript
-const WHATSAPP_NUMBER = 'YOUR_NUMBER'; // Format: 91XXXXXXXXXX
-```
-
-4. Run locally:
-```bash
-npm start
-```
-
-### Deployment
-
-Push to main branch - Vercel deploys automatically:
-```bash
-git add .
-git commit -m "Update cakes"
-git push origin main
-```
-
 ## How to Contribute
 
 1. **Fork** the repository
@@ -63,26 +31,6 @@ git push origin main
 - Test locally before pushing
 - Keep commits clear and descriptive
 - No direct pushes to main - use pull requests
-
-## Project Usage
-
-### Add Products
-Edit `js/products.js` and add to the cakes/cupcakes array:
-```javascript
-{
-    id: 1,
-    name: 'Cake Name',
-    description: 'Description',
-    price: 450,
-    emoji: '🍫'
-}
-```
-
-### Customize Theme
-Colors in `css/style.css`:
-- Primary: `#d4745f`
-- Secondary: `#fff5f0`
-- Background: `#fdfbf7`
 
 ### File Structure
 ```
@@ -100,6 +48,3 @@ Colors in `css/style.css`:
 └── package.json
 ```
 
-## License
-
-MIT License
