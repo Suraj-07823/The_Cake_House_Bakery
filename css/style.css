@@ -1,61 +1,4 @@
 /* ===========================
-   Font Faces
-   =========================== */
-
-/* Inter */
-@font-face {
-  font-family: 'Inter';
-  font-style: normal;
-  font-weight: 400;
-  font-display: swap;
-  src: url('../fonts/inter-v12-latin-regular.woff2') format('woff2');
-}
-@font-face {
-  font-family: 'Inter';
-  font-style: normal;
-  font-weight: 500;
-  font-display: swap;
-  src: url('../fonts/inter-v12-latin-500.woff2') format('woff2');
-}
-@font-face {
-  font-family: 'Inter';
-  font-style: normal;
-  font-weight: 600;
-  font-display: swap;
-  src: url('../fonts/inter-v12-latin-600.woff2') format('woff2');
-}
-
-/* Outfit */
-@font-face {
-  font-family: 'Outfit';
-  font-style: normal;
-  font-weight: 400;
-  font-display: swap;
-  src: url('../fonts/outfit-v6-latin-regular.woff2') format('woff2');
-}
-@font-face {
-  font-family: 'Outfit';
-  font-style: normal;
-  font-weight: 500;
-  font-display: swap;
-  src: url('../fonts/outfit-v6-latin-500.woff2') format('woff2');
-}
-@font-face {
-  font-family: 'Outfit';
-  font-style: normal;
-  font-weight: 600;
-  font-display: swap;
-  src: url('../fonts/outfit-v6-latin-600.woff2') format('woff2');
-}
-@font-face {
-  font-family: 'Outfit';
-  font-style: normal;
-  font-weight: 700;
-  font-display: swap;
-  src: url('../fonts/outfit-v6-latin-700.woff2') format('woff2');
-}
-
-/* ===========================
    Global Styles & Reset & Variables
    =========================== */
 :root {
@@ -876,7 +819,7 @@ h1, h2, h3, h4, h5, h6 {
 .option-card.selected { border-color: var(--primary-color); background: var(--primary-light); box-shadow: 0 4px 12px rgba(212, 106, 94, 0.15); }
 .option-card:hover:not(.selected) { transform: translateY(-3px); box-shadow: var(--shadow-sm); }
 .builder-summary { background: var(--bg-color); padding: 30px; border-radius: var(--border-radius-lg); margin-top: 40px; border: 1px solid var(--border-color); }
-.summary-row { display: flex; justify-content: space-between; padding: 10px 0; border-bottom: 1px solid var(--border-color); }
+.builder-summary .summary-row { display: flex; justify-content: space-between; padding: 10px 0; border-bottom: 1px solid var(--border-color); }
 
 /* ===========================
    Responsive Design

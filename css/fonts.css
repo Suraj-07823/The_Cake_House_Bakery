@@ -6,21 +6,21 @@
   font-style: normal;
   font-weight: 400;
   font-display: swap;
-  src: url('../fonts/inter-v12-latin-regular.woff2') format('woff2');
+  src: url('../fonts/inter-v20-latin-regular.ttf') format('truetype');
 }
 @font-face {
   font-family: 'Inter';
   font-style: normal;
   font-weight: 500;
   font-display: swap;
-  src: url('../fonts/inter-v12-latin-500.woff2') format('woff2');
+  src: url('../fonts/inter-v20-latin-500.ttf') format('truetype');
 }
 @font-face {
   font-family: 'Inter';
   font-style: normal;
   font-weight: 600;
   font-display: swap;
-  src: url('../fonts/inter-v12-latin-600.woff2') format('woff2');
+  src: url('../fonts/inter-v20-latin-600.ttf') format('truetype');
 }
 
 /* Outfit */
@@ -29,26 +29,26 @@
   font-style: normal;
   font-weight: 400;
   font-display: swap;
-  src: url('../fonts/outfit-v6-latin-regular.woff2') format('woff2');
+  src: url('../fonts/outfit-v15-latin-regular.ttf') format('truetype');
 }
 @font-face {
   font-family: 'Outfit';
   font-style: normal;
   font-weight: 500;
   font-display: swap;
-  src: url('../fonts/outfit-v6-latin-500.woff2') format('woff2');
+  src: url('../fonts/outfit-v15-latin-500.ttf') format('truetype');
 }
 @font-face {
   font-family: 'Outfit';
   font-style: normal;
   font-weight: 600;
   font-display: swap;
-  src: url('../fonts/outfit-v6-latin-600.woff2') format('woff2');
+  src: url('../fonts/outfit-v15-latin-600.ttf') format('truetype');
 }
 @font-face {
   font-family: 'Outfit';
   font-style: normal;
   font-weight: 700;
   font-display: swap;
-  src: url('../fonts/outfit-v6-latin-700.woff2') format('woff2');
+  src: url('../fonts/outfit-v15-latin-700.ttf') format('truetype');
 }
