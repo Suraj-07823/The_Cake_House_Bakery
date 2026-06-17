@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Video Custom Order - The Cake House</title>
+    <link rel="stylesheet" href="../css/fonts.css">
+    <link rel="stylesheet" href="../css/style.css">
+    <style>
+        .video-recording-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 2rem;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 2rem 0;
+        }
+
+        .recorder-frame {
+            background: var(--surface-color);
+            border-radius: var(--border-radius-lg);
+            padding: 2rem;
+            box-shadow: var(--shadow-md);
+            border: 1px solid var(--border-color);
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .video-preview-container {
+            width: 100%;
+            aspect-ratio: 16/9;
+            background: #000;
+            border-radius: 12px;
+            overflow: hidden;
+            margin-bottom: 1.5rem;
+            position: relative;
+            box-shadow: inset 0 0 20px rgba(0,0,0,0.5);
+        }
+
+        #video-preview {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transform: scaleX(-1); /* Mirror effect */
+        }
+
+        #recorded-video {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            display: none;
+        }
+
+        .recording-indicator {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            display: none;
+            align-items: center;
+            gap: 0.5rem;
+            background: rgba(0,0,0,0.5);
+            padding: 0.5rem 1rem;
+            border-radius: var(--border-radius-pill);
+            color: #ff4d4f;
+            font-weight: 600;
+            animation: pulse 1s infinite;
+            z-index: 2;
+        }
+
+        .recording-dot {
+            width: 12px;
+            height: 12px;
+            background: #ff4d4f;
+            border-radius: 50%;
+        }
+
+        .recorder-controls {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .btn-record-start {
+            background-color: var(--primary-color);
+            color: white;
+        }
+
+        .btn-record-stop {
+            background-color: #333;
+            color: white;
+            display: none;
+        }
+
+        .btn-send {
+            background-color: #25D366; /* WhatsApp Green */
+            color: white;
+            display: none;
+        }
+
+        .timer {
+            font-family: monospace;
+            font-size: 1.2rem;
+            margin-bottom: 1rem;
+            display: none;
+            color: var(--text-main);
+        }
+
+        .instructions {
+            margin-top: 2rem;
+            padding: 1.5rem;
+            background: var(--primary-light);
+            border-radius: 12px;
+            text-align: left;
+        }
+
+        .instructions h3 {
+            margin-bottom: 1rem;
+            color: var(--primary-color);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .instructions ul {
+            list-style: none;
+        }
+
+        .instructions li {
+            margin-bottom: 0.5rem;
+            padding-left: 1.5rem;
+            position: relative;
+        }
+
+        .instructions li::before {
+            content: '🍰';
+            position: absolute;
+            left: 0;
+        }
+
+        #status-msg {
+            margin-top: 1rem;
+            font-weight: 500;
+            color: var(--text-muted);
+        }
+
+        @media (max-width: 600px) {
+            .recorder-frame {
+                padding: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="container">
+            <div class="nav-content">
+                <a href="../index.html" class="logo-link">
+                    <h1 class="logo">🍰 The Cake House</h1>
+                </a>
+                <div class="nav-center">
+                    <a href="cart.html" class="cart-badge" id="cart-badge">
+                        <span class="cart-icon">🛒</span>
+                        <span class="cart-count" id="cart-count">0</span>
+                    </a>
+
+                    <button class="hamburger" id="hamburger">
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                    </button>
+
+                    <ul class="nav-links" id="nav-menu">
+                        <li><a href="../index.html">Home</a></li>
+                        <li><a href="cakes.html">Cakes</a></li>
+                        <li><a href="cupcakes.html">Cupcakes</a></li>
+                        <li><a href="custom.html">Custom Cake</a></li>
+                        <li><a href="video-order.html" class="active">Custom Order 🎥</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Page Header -->
+    <section class="page-header">
+        <div class="container">
+            <h1>Video Custom Order 🎥</h1>
+            <p>Tell us exactly what you want! Record a quick video describing your dream cake.</p>
+        </div>
+    </section>
+
+    <!-- Video Recorder Section -->
+    <section class="video-recording-section">
+        <div class="container">
+            <div class="video-recording-grid">
+                <div class="recorder-frame">
+                    <div class="video-preview-container">
+                        <video id="video-preview" autoplay muted playsinline></video>
+                        <video id="recorded-video" controls></video>
+                        <div class="recording-indicator" id="recording-indicator">
+                            <div class="recording-dot"></div>
+                            <span>REC</span>
+                        </div>
+                    </div>
+
+                    <div class="timer" id="timer">00:00</div>
+                    
+                    <div class="recorder-controls">
+                        <button id="start-btn" class="btn btn-record-start">
+                            <span>⏺️ Start Recording</span>
+                        </button>
+                        <button id="stop-btn" class="btn btn-record-stop">
+                            <span>⏹️ Stop Recording</span>
+                        </button>
+                        <button id="restart-btn" class="btn btn-secondary" style="display: none;">
+                            <span>🔄 Record Again</span>
+                        </button>
+                        <button id="send-btn" class="btn btn-send">
+                            <span>💬 Send via WhatsApp</span>
+                        </button>
+                    </div>
+
+                    <p id="status-msg">Click start to begin recording your order details.</p>
+
+                    <div class="instructions">
+                        <h3><span>💡</span> Recording Tips</h3>
+                        <ul>
+                            <li>Describe the flavor, size, and design elements.</li>
+                            <li>Mention any allergies or special requirements.</li>
+                            <li>State the date and time you need it by.</li>
+                            <li>After stopping, you can review before sending!</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2026 The Cake House. All cakes are baked fresh to order.</p>
+            <p class="contact-info">📱 Order via WhatsApp • 💳 Cash on Delivery & UPI</p>
+        </div>
+    </footer>
+
+    <script src="../js/products.js"></script>
+    <script src="../js/script.js"></script>
+    <script src="../js/video-order.js"></script>
+</body>
+</html>

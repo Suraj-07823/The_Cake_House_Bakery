@@ -216,6 +216,11 @@ h1, h2, h3, h4, h5, h6 {
     width: 100%;
 }
 
+.nav-links li:last-child a {
+    color: var(--primary-color);
+    font-weight: 600;
+}
+
 /* Hamburger Menu */
 .hamburger {
     display: none;

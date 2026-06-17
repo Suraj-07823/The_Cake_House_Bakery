@@ -7,6 +7,7 @@ A mobile-first bakery website with WhatsApp integration and custom cake builder.
 ✨ **Responsive Design** - Mobile-first, works on all devices  
 🎂 **Product Showcase** - Display cakes and cupcakes dynamically  
 🎨 **Custom Cake Builder** - Users design their own cakes with pricing  
+🎥 **Video Custom Order** - Record video/audio messages for complex custom orders  
 💬 **WhatsApp Integration** - One-click ordering with pre-filled messages  
 ⚡ **Fast & Lightweight** - No backend, pure HTML/CSS/JavaScript  
 🔧 **Easy to Maintain** - Simple product data structure  
@@ -38,12 +39,14 @@ A mobile-first bakery website with WhatsApp integration and custom cake builder.
 ├── pages/
 │   ├── cakes.html
 │   ├── cupcakes.html
-│   └── custom.html
+│   ├── custom.html
+│   └── video-order.html
 ├── css/style.css
 ├── js/
 │   ├── products.js
 │   ├── script.js
-│   └── customCake.js
+│   ├── customCake.js
+│   └── video-order.js
 ├── vercel.json
 └── package.json
 ```
