@@ -1,10 +1,10 @@
 // Custom Cake Builder Data
 const cakeResources = {
     size: [
-        { id: 1, name: '250 gm', price: 200, emoji: '🎂' },
-        { id: 2, name: '500 gm', price: 350, emoji: '🎂' },
-        { id: 3, name: '750 gm', price: 500, emoji: '🎂' },
-        { id: 4, name: '1 kg', price: 700, emoji: '🎂' }
+        { id: 1, name: '250 gm', price: 200, emoji: '🎂', desc: 'Perfect for a small treat' },
+        { id: 2, name: '500 gm', price: 350, emoji: '🎂', desc: 'Ideal for small celebrations' },
+        { id: 3, name: '750 gm', price: 500, emoji: '🎂', desc: 'Great for family parties' },
+        { id: 4, name: '1 kg', price: 700, emoji: '🎂', desc: 'Large party size' }
     ],
     flavor: [
         { id: 1, name: 'Chocolate', price: 0, emoji: '🍫' },
@@ -24,8 +24,7 @@ const cakeResources = {
         { id: 2, name: 'Fresh Berries', price: 80, emoji: '🫐' },
         { id: 3, name: 'Chocolate Chips', price: 40, emoji: '🍫' },
         { id: 4, name: 'Nuts', price: 50, emoji: '🥜' },
-        { id: 5, name: 'Edible Flowers', price: 100, emoji: '🌸' },
-        { id: 6, name: 'None', price: 0, emoji: '✔️' }
+        { id: 5, name: 'Edible Flowers', price: 100, emoji: '🌸' }
     ],
     filling: [
         { id: 1, name: 'Jam', price: 30, emoji: '🍓' },
@@ -59,50 +58,99 @@ function renderCustomCakeBuilder() {
     if (!builder) return;
 
     builder.innerHTML = `
-        <div class="builder-section">
-            <h3>Step 1: Select Size</h3>
-            <div class="options-grid" id="size-options"></div>
-        </div>
+        <div class="custom-builder-layout">
+            <div class="builder-columns">
+                <!-- Left: Options -->
+                <div class="builder-options-panel">
+                    <div class="step-card fade-in show" id="step-1">
+                        <div class="step-header">
+                            <span class="step-number">01</span>
+                            <h3>Select Cake Size</h3>
+                        </div>
+                        <div class="options-grid" id="size-options"></div>
+                    </div>
 
-        <div class="builder-section">
-            <h3>Step 2: Choose Flavor</h3>
-            <div class="options-grid" id="flavor-options"></div>
-        </div>
+                    <div class="step-card fade-in show" id="step-2">
+                        <div class="step-header">
+                            <span class="step-number">02</span>
+                            <h3>Choose Base Flavor</h3>
+                        </div>
+                        <div class="options-grid" id="flavor-options"></div>
+                    </div>
 
-        <div class="builder-section">
-            <h3>Step 3: Pick Frosting</h3>
-            <div class="options-grid" id="frosting-options"></div>
-        </div>
+                    <div class="step-card fade-in show" id="step-3">
+                        <div class="step-header">
+                            <span class="step-number">03</span>
+                            <h3>Pick Frosting</h3>
+                        </div>
+                        <div class="options-grid" id="frosting-options"></div>
+                    </div>
 
-        <div class="builder-section">
-            <h3>Step 4: Select Filling</h3>
-            <div class="options-grid" id="filling-options"></div>
-        </div>
+                    <div class="step-card fade-in show" id="step-4">
+                        <div class="step-header">
+                            <span class="step-number">04</span>
+                            <h3>Select Filling</h3>
+                        </div>
+                        <div class="options-grid" id="filling-options"></div>
+                    </div>
 
-        <div class="builder-section">
-            <h3>Step 5: Add Toppings (Multiple Choice)</h3>
-            <div class="options-grid" id="toppings-options"></div>
-        </div>
+                    <div class="step-card fade-in show" id="step-5">
+                        <div class="step-header">
+                            <span class="step-number">05</span>
+                            <h3>Add Toppings</h3>
+                            <p class="step-subtitle">Select as many as you like</p>
+                        </div>
+                        <div class="options-grid" id="toppings-options"></div>
+                    </div>
 
-        <div class="builder-section">
-            <h3>Step 6: Choose Decoration</h3>
-            <div class="options-grid" id="decoration-options"></div>
-        </div>
+                    <div class="step-card fade-in show" id="step-6">
+                        <div class="step-header">
+                            <span class="step-number">06</span>
+                            <h3>Special Decoration</h3>
+                        </div>
+                        <div class="options-grid" id="decoration-options"></div>
+                    </div>
 
-        <div class="builder-section">
-            <h3>Step 7: Add Special Message (Optional)</h3>
-            <input type="text" id="custom-message" placeholder="e.g., Happy Birthday! or Congratulations!" maxlength="50" class="message-input">
-            <small>Maximum 50 characters</small>
-        </div>
-
-        <div class="builder-summary">
-            <div class="summary-box">
-                <h3>Your Custom Cake</h3>
-                <div id="selection-summary"></div>
-                <div class="total-price">
-                    Base Price: ₹<span id="base-price">0</span>
+                    <div class="step-card fade-in show" id="step-7">
+                        <div class="step-header">
+                            <span class="step-number">07</span>
+                            <h3>Final Details</h3>
+                        </div>
+                        <div class="message-input-wrapper">
+                            <label for="custom-message">Message on Cake</label>
+                            <textarea id="custom-message" placeholder="e.g., Happy 25th Birthday Sarah!" maxlength="50"></textarea>
+                            <div class="char-count"><span id="current-char">0</span>/50</div>
+                        </div>
+                    </div>
                 </div>
-                <button class="btn btn-primary" id="order-custom-btn">Order Custom Cake</button>
+
+                <!-- Right: Summary Sidebar -->
+                <div class="builder-summary-panel">
+                    <div class="summary-card-sticky">
+                        <div class="summary-card">
+                            <div class="summary-header">
+                                <h3>Order Summary</h3>
+                                <span class="badge">Custom Cake</span>
+                            </div>
+                            
+                            <div id="selection-summary" class="selection-summary">
+                                <p class="empty-summary-msg">Start selecting options to build your cake</p>
+                            </div>
+
+                            <div class="price-breakdown">
+                                <div class="price-row total">
+                                    <span>Estimated Total</span>
+                                    <span>₹<span id="total-price-display">0</span></span>
+                                </div>
+                            </div>
+
+                            <button class="btn btn-primary btn-full" id="order-custom-btn" disabled>
+                                <span>Place Custom Order</span>
+                            </button>
+                            <p class="summary-note">Prices are subject to final confirmation via WhatsApp.</p>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     `;
@@ -115,14 +163,19 @@ function renderCustomCakeBuilder() {
     renderOptions('toppings', 'toppings-options', true);
     renderOptions('decoration', 'decoration-options', false);
 
-    // Add event listener for message input
+    // Initial price update
+    updateSummary();
+
+    // Event listener for message input
     const messageInput = document.getElementById('custom-message');
-    messageInput.addEventListener('change', function() {
+    const charCount = document.getElementById('current-char');
+    messageInput.addEventListener('input', function() {
         customCakeSelection.message = this.value;
+        charCount.textContent = this.value.length;
         updateSummary();
     });
 
-    // Add order button listener
+    // Order button listener
     const orderBtn = document.getElementById('order-custom-btn');
     orderBtn.addEventListener('click', orderCustomCake);
 }
@@ -136,58 +189,68 @@ function renderOptions(category, containerId, isMultiple) {
     container.innerHTML = '';
 
     options.forEach(option => {
-        const label = document.createElement('label');
-        label.className = 'option-label';
-
-        const input = document.createElement('input');
-        input.type = isMultiple ? 'checkbox' : 'radio';
-        input.name = category;
-        input.value = option.id;
-        input.dataset.category = category;
-        input.dataset.name = option.name;
-        input.dataset.price = option.price;
-
-        input.addEventListener('change', function() {
-            handleOptionChange(this, category, isMultiple);
-        });
-
-        const span = document.createElement('span');
-        span.className = 'option-box';
-        span.innerHTML = `
-            <div class="option-emoji">${option.emoji}</div>
-            <div class="option-text">
-                <div class="option-name">${option.name}</div>
-                <div class="option-price">₹${option.price}</div>
-            </div>
+        const choiceCard = document.createElement('div');
+        choiceCard.className = `choice-card ${isMultiple ? 'checkbox' : 'radio'}`;
+        
+        choiceCard.innerHTML = `
+            <input type="${isMultiple ? 'checkbox' : 'radio'}" 
+                   name="${category}" 
+                   id="${category}-${option.id}"
+                   value="${option.id}"
+                   data-category="${category}"
+                   data-name="${option.name}"
+                   data-price="${option.price}"
+                   data-emoji="${option.emoji}">
+            <label for="${category}-${option.id}">
+                <div class="choice-content">
+                    <div class="choice-emoji">${option.emoji}</div>
+                    <div class="choice-info">
+                        <span class="choice-name">${option.name}</span>
+                        <span class="choice-price">${option.price > 0 ? '+₹' + option.price : 'Included'}</span>
+                    </div>
+                    ${option.desc ? `<p class="choice-desc">${option.desc}</p>` : ''}
+                    <div class="choice-check-mark">✓</div>
+                </div>
+            </label>
         `;
 
-        label.appendChild(input);
-        label.appendChild(span);
-        container.appendChild(label);
+        const input = choiceCard.querySelector('input');
+        input.addEventListener('change', function() {
+            handleOptionChange(this, category, isMultiple);
+            
+            // Add visual active class to the card for single choice
+            if (!isMultiple) {
+                container.querySelectorAll('.choice-card').forEach(card => card.classList.remove('active'));
+                choiceCard.classList.add('active');
+            } else {
+                choiceCard.classList.toggle('active', this.checked);
+            }
+        });
+
+        container.appendChild(choiceCard);
     });
 }
 
 // Handle option selection
 function handleOptionChange(input, category, isMultiple) {
     if (isMultiple) {
-        // For toppings (multiple choice)
-        const selectedToppings = [];
+        const selectedOptions = [];
         document.querySelectorAll(`input[name="${category}"]:checked`).forEach(checkbox => {
-            selectedToppings.push({
+            selectedOptions.push({
                 id: checkbox.value,
                 name: checkbox.dataset.name,
-                price: parseInt(checkbox.dataset.price)
+                price: parseInt(checkbox.dataset.price),
+                emoji: checkbox.dataset.emoji
             });
         });
-        customCakeSelection[category] = selectedToppings;
+        customCakeSelection[category] = selectedOptions;
     } else {
-        // For single choice options
-        const selectedOption = {
+        customCakeSelection[category] = {
             id: input.value,
             name: input.dataset.name,
-            price: parseInt(input.dataset.price)
+            price: parseInt(input.dataset.price),
+            emoji: input.dataset.emoji
         };
-        customCakeSelection[category] = selectedOption;
     }
 
     updateSummary();
@@ -196,99 +259,102 @@ function handleOptionChange(input, category, isMultiple) {
 // Update summary and price
 function updateSummary() {
     const summary = document.getElementById('selection-summary');
-    const basePrice = 200; // Base price for 6 inch cake
-    let totalPrice = basePrice;
+    const totalPriceEl = document.getElementById('total-price-display');
+    const orderBtn = document.getElementById('order-custom-btn');
+    
+    if (!summary) return;
 
-    let summaryHTML = `<ul class="summary-list">`;
+    let totalPrice = 0;
+    let hasSelections = false;
+    let summaryHTML = `<div class="summary-list">`;
 
-    // Size
-    if (customCakeSelection.size) {
-        summaryHTML += `<li>${customCakeSelection.size.name} - ₹${customCakeSelection.size.price}</li>`;
-        totalPrice = customCakeSelection.size.price; // Size replaces base price
-    }
+    const categories = [
+        { key: 'size', label: 'Size', icon: '📏' },
+        { key: 'flavor', label: 'Flavor', icon: '🍫' },
+        { key: 'frosting', label: 'Frosting', icon: '🧈' },
+        { key: 'filling', label: 'Filling', icon: '🍓' },
+        { key: 'toppings', label: 'Toppings', icon: '✨', isMultiple: true },
+        { key: 'decoration', label: 'Decoration', icon: '🎨' }
+    ];
 
-    // Flavor
-    if (customCakeSelection.flavor) {
-        summaryHTML += `<li>${customCakeSelection.flavor.emoji} ${customCakeSelection.flavor.name} - ₹${customCakeSelection.flavor.price}</li>`;
-        totalPrice += customCakeSelection.flavor.price;
-    }
+    categories.forEach(cat => {
+        const selection = customCakeSelection[cat.key];
+        
+        if (cat.isMultiple) {
+            if (selection && selection.length > 0) {
+                hasSelections = true;
+                selection.forEach(item => {
+                    summaryHTML += createSummaryItem(cat.label, item, item.emoji);
+                    totalPrice += item.price;
+                });
+            }
+        } else if (selection) {
+            hasSelections = true;
+            summaryHTML += createSummaryItem(cat.label, selection, selection.emoji);
+            totalPrice += selection.price;
+        }
+    });
 
-    // Frosting
-    if (customCakeSelection.frosting) {
-        summaryHTML += `<li>${customCakeSelection.frosting.emoji} ${customCakeSelection.frosting.name} - ₹${customCakeSelection.frosting.price}</li>`;
-        totalPrice += customCakeSelection.frosting.price;
-    }
-
-    // Filling
-    if (customCakeSelection.filling) {
-        summaryHTML += `<li>${customCakeSelection.filling.emoji} ${customCakeSelection.filling.name} - ₹${customCakeSelection.filling.price}</li>`;
-        totalPrice += customCakeSelection.filling.price;
-    }
-
-    // Toppings
-    if (customCakeSelection.toppings.length > 0) {
-        customCakeSelection.toppings.forEach(topping => {
-            summaryHTML += `<li>${topping.emoji} ${topping.name} - ₹${topping.price}</li>`;
-            totalPrice += topping.price;
-        });
-    }
-
-    // Decoration
-    if (customCakeSelection.decoration) {
-        summaryHTML += `<li>${customCakeSelection.decoration.emoji} ${customCakeSelection.decoration.name} - ₹${customCakeSelection.decoration.price}</li>`;
-        totalPrice += customCakeSelection.decoration.price;
-    }
-
-    // Message
     if (customCakeSelection.message) {
-        summaryHTML += `<li>💬 Message: "${customCakeSelection.message}"</li>`;
+        summaryHTML += `
+            <div class="summary-item">
+                <span class="item-label">💬 Message</span>
+                <span class="item-value">"${customCakeSelection.message}"</span>
+            </div>
+        `;
     }
 
-    summaryHTML += `</ul>`;
-    summary.innerHTML = summaryHTML;
+    summaryHTML += `</div>`;
+    
+    if (!hasSelections) {
+        summary.innerHTML = `<p class="empty-summary-msg">Start selecting options to build your cake</p>`;
+    } else {
+        summary.innerHTML = summaryHTML;
+    }
 
-    // Update price
-    document.getElementById('base-price').textContent = totalPrice;
+    totalPriceEl.textContent = totalPrice;
+
+    // Enable order button only if essential selections are made
+    const isComplete = customCakeSelection.size && customCakeSelection.flavor && 
+                       customCakeSelection.frosting && customCakeSelection.filling && 
+                       customCakeSelection.decoration;
+    
+    orderBtn.disabled = !isComplete;
+}
+
+function createSummaryItem(label, item, icon) {
+    return `
+        <div class="summary-item animate-in">
+            <div class="item-main">
+                <span class="item-label">${label}</span>
+                <span class="item-value">${icon} ${item.name}</span>
+            </div>
+            <span class="item-price">₹${item.price}</span>
+        </div>
+    `;
 }
 
 // Order custom cake
 function orderCustomCake() {
-    // Validate selections
-    if (!customCakeSelection.size || !customCakeSelection.flavor || 
-        !customCakeSelection.frosting || !customCakeSelection.filling || 
-        !customCakeSelection.decoration) {
-        alert('Please complete all steps before ordering! 🎂');
-        return;
+    let orderDetails = `*Custom Cake Order Request* 🎂\n\n`;
+    orderDetails += `📏 *Size:* ${customCakeSelection.size.name}\n`;
+    orderDetails += `🍫 *Flavor:* ${customCakeSelection.flavor.name}\n`;
+    orderDetails += `🧈 *Frosting:* ${customCakeSelection.frosting.name}\n`;
+    orderDetails += `🍓 *Filling:* ${customCakeSelection.filling.name}\n`;
+
+    if (customCakeSelection.toppings && customCakeSelection.toppings.length > 0) {
+        orderDetails += `✨ *Toppings:* ${customCakeSelection.toppings.map(t => t.name).join(', ')}\n`;
     }
 
-    let orderDetails = `*Custom Cake Order* 🎂\n\n`;
-    orderDetails += `📏 Size: ${customCakeSelection.size.name}\n`;
-    orderDetails += `🍫 Flavor: ${customCakeSelection.flavor.name}\n`;
-    orderDetails += `🧈 Frosting: ${customCakeSelection.frosting.name}\n`;
-    orderDetails += `🍓 Filling: ${customCakeSelection.filling.name}\n`;
-
-    if (customCakeSelection.toppings.length > 0) {
-        orderDetails += `✨ Toppings: ${customCakeSelection.toppings.map(t => t.name).join(', ')}\n`;
-    }
-
-    orderDetails += `🎨 Decoration: ${customCakeSelection.decoration.name}\n`;
+    orderDetails += `🎨 *Decoration:* ${customCakeSelection.decoration.name}\n`;
 
     if (customCakeSelection.message) {
-        orderDetails += `💬 Message: ${customCakeSelection.message}\n`;
+        orderDetails += `💬 *Message:* "${customCakeSelection.message}"\n`;
     }
 
-    // Calculate total price
-    let totalPrice = customCakeSelection.size.price;
-    totalPrice += customCakeSelection.flavor.price;
-    totalPrice += customCakeSelection.frosting.price;
-    totalPrice += customCakeSelection.filling.price;
-    totalPrice += customCakeSelection.decoration.price;
-    customCakeSelection.toppings.forEach(topping => {
-        totalPrice += topping.price;
-    });
-
-    orderDetails += `\n💰 Total Price: ₹${totalPrice}`;
-
+    const price = document.getElementById('total-price-display').textContent;
+    orderDetails += `\n💰 *Total Price:* ₹${price}`;
+    
     const encodedMessage = encodeURIComponent(orderDetails);
     window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=${encodedMessage}`, '_blank');
 }
