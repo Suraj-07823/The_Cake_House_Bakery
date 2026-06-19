@@ -1,0 +1,40 @@
+@import "tailwindcss";
+
+:root {
+  --background: #FAF7F2;
+  --foreground: #2C1A11;
+  --accent: #D4A373;
+  --accent-soft: #E8A598;
+  --espresso: #2C1A11;
+  --warm-cream: #FAF7F2;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-accent: var(--accent);
+  --color-accent-soft: var(--accent-soft);
+  --color-espresso: var(--espresso);
+  --color-warm-cream: var(--warm-cream);
+  
+  --font-serif: var(--font-serif);
+  --font-sans: var(--font-sans);
+}
+
+@layer base {
+  body {
+    @apply bg-background text-foreground font-sans antialiased shrink-0;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-serif;
+  }
+}
+
+.premium-shadow {
+  box-shadow: 0 10px 30px -10px rgba(44, 26, 17, 0.1);
+}
+
+.glass {
+  @apply bg-white/70 backdrop-blur-md border border-white/20;
+}
