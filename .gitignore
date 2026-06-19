@@ -50,14 +50,5 @@ dockerfile-help.txt
 AGENTS.md
 CLAUDE.md
 
-# Assets (requested as non-essential)
-*.png
-*.jpg
-*.jpeg
-*.webp
-*.svg
-*.gif
-/public/brand/
-
 # Legacy Files
 /legacy_v1/
