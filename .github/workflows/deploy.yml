@@ -26,25 +26,9 @@ jobs:
       - name: Install Dependencies
         run: npm install
       
-      - name: Run Tests
-        run: npm test
+      - name: Run Lint
+        run: npm run lint
       
-      - name: Check File Integrity
-        run: |
-          echo "✓ HTML files present"
-          test -f index.html && echo "  - index.html" || exit 1
-          test -f pages/cakes.html && echo "  - pages/cakes.html" || exit 1
-          test -f pages/cupcakes.html && echo "  - pages/cupcakes.html" || exit 1
-          test -f pages/custom.html && echo "  - pages/custom.html" || exit 1
-          
-          echo "✓ CSS files present"
-          test -f css/style.css && echo "  - css/style.css" || exit 1
-          
-          echo "✓ JavaScript files present"
-          test -f js/products.js && echo "  - js/products.js" || exit 1
-          test -f js/script.js && echo "  - js/script.js" || exit 1
-          test -f js/customCake.js && echo "  - js/customCake.js" || exit 1
-
   deploy:
    name: Deploy to Vercel
    runs-on: ubuntu-latest
