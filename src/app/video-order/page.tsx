@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useRef, useEffect } from "react";
+import { useState, useRef, useEffect, useCallback } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Camera, StopCircle, RefreshCcw, Send, Video, Mic } from "lucide-react";
 import Navbar from "@/components/Navbar";
@@ -14,25 +14,19 @@ export default function VideoOrderPage() {
   const [status, setStatus] = useState("Initializing camera...");
 
   const videoPreviewRef = useRef<HTMLVideoElement>(null);
+  const streamRef = useRef<MediaStream | null>(null);
   const mediaRecorderRef = useRef<MediaRecorder | null>(null);
   const chunksRef = useRef<Blob[]>([]);
   const timerRef = useRef<NodeJS.Timeout | null>(null);
 
-  useEffect(() => {
-    initCamera();
-    return () => {
-      if (stream) stream.getTracks().forEach(track => track.stop());
-      if (timerRef.current) clearInterval(timerRef.current);
-    };
-  }, []);
-
-  async function initCamera() {
+  const initCamera = useCallback(async () => {
     try {
       const mediaStream = await navigator.mediaDevices.getUserMedia({
         video: { facingMode: "user" },
         audio: true,
       });
       setStream(mediaStream);
+      streamRef.current = mediaStream;
       if (videoPreviewRef.current) {
         videoPreviewRef.current.srcObject = mediaStream;
       }
@@ -41,7 +35,21 @@ export default function VideoOrderPage() {
       console.error("Camera access error:", err);
       setStatus("Error: Permission denied. Please enable camera/mic.");
     }
-  }
+  }, []);
+
+  useEffect(() => {
+    const startCapture = async () => {
+      await initCamera();
+    };
+    startCapture();
+
+    return () => {
+      if (streamRef.current) {
+        streamRef.current.getTracks().forEach(track => track.stop());
+      }
+      if (timerRef.current) clearInterval(timerRef.current);
+    };
+  }, [initCamera]);
 
   const startRecording = () => {
     if (!stream) return;
@@ -114,8 +122,8 @@ export default function VideoOrderPage() {
               Video Call Order
             </h1>
             <p className="text-espresso/60 max-w-2xl mx-auto mb-12">
-              Sometimes words aren't enough. Record a quick video describing your dream cake, 
-              and we'll bring it to life!
+              Sometimes words aren&apos;t enough. Record a quick video describing your dream cake, 
+              and we&apos;ll bring it to life!
             </p>
           </motion.div>
 
@@ -207,7 +215,7 @@ export default function VideoOrderPage() {
             <div className="p-6 rounded-2xl bg-white/50 premium-shadow">
                 <Send className="mx-auto mb-4 text-accent" />
                 <h3 className="font-bold text-espresso">Direct Chat</h3>
-                <p className="text-xs text-espresso/60 mt-2">We'll reply with a quote and timeframe instantly.</p>
+                <p className="text-xs text-espresso/60 mt-2">We&apos;ll reply with a quote and timeframe instantly.</p>
             </div>
           </div>
         </div>

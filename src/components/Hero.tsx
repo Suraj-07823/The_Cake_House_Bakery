@@ -31,7 +31,7 @@ export default function Hero() {
           </p>
           <div className="mt-10 flex flex-wrap items-center justify-center gap-4 md:justify-start">
             <button className="rounded-full bg-accent px-8 py-4 text-white shadow-lg transition-all hover:bg-espresso hover:shadow-xl active:scale-95">
-              View Today's Menu
+              View Today&apos;s Menu
             </button>
             <button className="rounded-full border-2 border-espresso/20 bg-transparent px-8 py-4 text-espresso transition-all hover:border-espresso active:scale-95">
               Our Story

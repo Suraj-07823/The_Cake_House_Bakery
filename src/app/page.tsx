@@ -54,7 +54,7 @@ export default function Home() {
               Celebrate Your Special Moments With Us
             </h2>
             <p className="text-xl text-white/80 mb-10 leading-relaxed">
-               Whether it's a wedding, birthday, or just a Tuesday – we've got the perfect 
+               Whether it&apos;s a wedding, birthday, or just a Tuesday – we&apos;ve got the perfect 
                treat waiting for you.
             </p>
             <div className="flex flex-wrap justify-center gap-4">
