@@ -1,6 +1,6 @@
 "use client";
 
-import { motion } from "framer-motion";
+import { motion, type Variants } from "framer-motion";
 import { Sparkles, Heart, Palette } from "lucide-react";
 
 const features = [
@@ -27,7 +27,7 @@ const features = [
   },
 ];
 
-const containerVariants = {
+const containerVariants: Variants = {
   hidden: {},
   visible: {
     transition: {
@@ -36,7 +36,7 @@ const containerVariants = {
   },
 };
 
-const itemVariants = {
+const itemVariants: Variants = {
   hidden: { opacity: 0, y: 30 },
   visible: {
     opacity: 1,
@@ -46,7 +46,7 @@ const itemVariants = {
       ease: [0.22, 1, 0.36, 1],
     },
   },
-} as any;
+};
 
 export default function Features() {
   return (
