@@ -6,6 +6,7 @@ import { ShoppingCart, Menu, X, Cake } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { clsx, type ClassValue } from "clsx";
 import { twMerge } from "tailwind-merge";
+import { useCart } from "@/context/CartContext";
 
 function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
@@ -21,6 +22,7 @@ const navLinks = [
 export default function Navbar() {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const { totalItems } = useCart();
 
   useEffect(() => {
     const handleScroll = () => setIsScrolled(window.scrollY > 20);
@@ -54,19 +56,29 @@ export default function Navbar() {
               {link.name}
             </Link>
           ))}
-          <button className="relative p-2 text-espresso hover:text-accent transition-colors">
+          <Link 
+            href="/cart"
+            className="hidden md:block relative p-2 text-espresso hover:text-accent transition-colors"
+          >
             <ShoppingCart size={22} />
-            <span className="absolute -right-1 -top-1 flex h-4 w-4 items-center justify-center rounded-full bg-accent text-[10px] font-bold text-white">
-              0
-            </span>
-          </button>
+            {totalItems > 0 && (
+              <span className="absolute -right-1 -top-1 flex h-4 w-4 items-center justify-center rounded-full bg-accent text-[10px] font-bold text-white">
+                {totalItems}
+              </span>
+            )}
+          </Link>
         </div>
 
         {/* Mobile Toggle */}
         <div className="flex items-center gap-4 md:hidden">
-          <button className="relative p-2 text-espresso">
+          <Link href="/cart" className="relative p-2 text-espresso">
             <ShoppingCart size={22} />
-          </button>
+            {totalItems > 0 && (
+              <span className="absolute -right-1 -top-1 flex h-4 w-4 items-center justify-center rounded-full bg-accent text-[10px] font-bold text-white">
+                {totalItems}
+              </span>
+            )}
+          </Link>
           <button
             onClick={() => setIsMenuOpen(!isMenuOpen)}
             className="text-espresso"
@@ -96,6 +108,13 @@ export default function Navbar() {
                   {link.name}
                 </Link>
               ))}
+              <Link
+                href="/cart"
+                onClick={() => setIsMenuOpen(false)}
+                className="text-lg font-serif font-medium text-accent border-t border-espresso/5 pt-4"
+              >
+                View Cart ({totalItems})
+              </Link>
             </div>
           </motion.div>
         )}

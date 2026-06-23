@@ -3,8 +3,15 @@
 import { useState } from "react";
 import Image from "next/image";
 import { motion } from "framer-motion";
-import { ShoppingCart, Plus, Minus } from "lucide-react";
+import { ShoppingCart, Plus, Minus, Check } from "lucide-react";
+import { clsx, type ClassValue } from "clsx";
+import { twMerge } from "tailwind-merge";
 import { Product } from "@/data/products";
+import { useCart } from "@/context/CartContext";
+
+function cn(...inputs: ClassValue[]) {
+  return twMerge(clsx(inputs));
+}
 
 interface ProductCardProps {
   product: Product;
@@ -12,9 +19,17 @@ interface ProductCardProps {
 
 export default function ProductCard({ product }: ProductCardProps) {
   const [quantity, setQuantity] = useState(1);
+  const [isAdded, setIsAdded] = useState(false);
+  const { addToCart } = useCart();
 
   const increment = () => setQuantity((prev) => prev + 1);
   const decrement = () => setQuantity((prev) => (prev > 1 ? prev - 1 : 1));
+
+  const handleAddToCart = () => {
+    addToCart(product, quantity);
+    setIsAdded(true);
+    setTimeout(() => setIsAdded(false), 2000);
+  };
 
   return (
     <motion.div
@@ -70,9 +85,24 @@ export default function ProductCard({ product }: ProductCardProps) {
         </div>
 
         {/* Action Button */}
-        <button className="w-full flex items-center justify-center gap-2 rounded-xl bg-espresso py-3 text-sm font-bold text-white transition-all hover:bg-accent active:scale-95 shadow-md">
-          <ShoppingCart size={18} />
-          <span>Add to Cart</span>
+        <button 
+          onClick={handleAddToCart}
+          className={cn(
+            "w-full flex items-center justify-center gap-2 rounded-xl py-3 text-sm font-bold transition-all active:scale-95 shadow-md",
+            isAdded ? "bg-green-600 text-white" : "bg-espresso text-white hover:bg-accent"
+          )}
+        >
+          {isAdded ? (
+            <>
+              <Check size={18} />
+              <span>Added to Cart!</span>
+            </>
+          ) : (
+            <>
+              <ShoppingCart size={18} />
+              <span>Add to Cart</span>
+            </>
+          )}
         </button>
       </div>
     </motion.div>
